@@ -137,6 +137,12 @@ cell.targetSurface = 20.0
 ----------  # @Submenu@ Change Lambda Surface
 cell.lambdaSurface = 2.0
 
+----------  # @Submenu@ Change Cell Pressure
+cell.Pressure = 25
+
+----------  # @Submenu@ Change Lambda Pressure
+cell.lambdaPressure = 2.0
+
 ----------  # @Submenu@ Apply Force To Cell
 # Make sure ExternalPotential plugin is loaded
 cell.lambdaVecX = -0.5  # force component pointing along X axis - towards positive X's
@@ -363,6 +369,15 @@ targetSurface = cell.targetSurface
 ----------  # @Submenu@ Lambda Surface
 # READ/WRITE  ACCESS        
 lambdaSurface = cell.lambdaSurface
+
+----------  # @Submenu@ Pressure
+# READ/WRITE  ACCESS                
+pressure = cell.pressure
+
+----------  # @Submenu@ Lambda Pressure
+# READ/WRITE  ACCESS        
+lambdaPressure = cell.lambdaPressure
+
 
 ----------  # @Submenu@ Id
 # READ ONLY ACCESS        
