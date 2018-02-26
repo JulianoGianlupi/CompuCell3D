@@ -44,6 +44,8 @@ namespace CompuCell3D {
         volume(0),
         targetVolume(0.0),
         lambdaVolume(0.0),
+		pressure(0),//added by JFG for the pressure pluggin
+		lambdaPressure(0),//added by JFG for the pressure pluggin
         surface(0),
         targetSurface(0.0),
         lambdaSurface(0.0),

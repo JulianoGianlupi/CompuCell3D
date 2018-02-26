@@ -37,7 +37,7 @@ namespace CompuCell3D {
 	class PRESSURE_EXPORT PressureEnergyParam{
 	public:
 		PressureEnergyParam():targetPressure(0.0),lambdaPressure(0.0){}
-		double targetPressure;
+		//double targetPressure;
 		double lambdaPressure;
 		std::string typeName;
 	};
@@ -52,7 +52,7 @@ namespace CompuCell3D {
 
 		std::string pluginName;
 
-		double targetPressure;
+		//double targetPressure;
 		double lambdaPressure;
 		enum FunctionType {GLOBAL=0,BYCELLTYPE=1,BYCELLID=2};
 		FunctionType functionType;
@@ -65,7 +65,7 @@ namespace CompuCell3D {
 		double changeEnergyGlobal(const Point3D &pt, const CellG *newCell,const CellG *oldCell);
 		double changeEnergyByCellType(const Point3D &pt, const CellG *newCell,const CellG *oldCell);
 		double changeEnergyByCellId(const Point3D &pt, const CellG *newCell,const CellG *oldCell);
-		double customExpressionFunction(double _lambdaPressure,double _targetPressure, double _pressureBefore,double _pressureAfter);
+		double customExpressionFunction(double _lambdaPressure/*,double _targetPressure*/, double _pressureBefore,double _pressureAfter);
 
 	public:
 		PressurePlugin():potts(0),energyExpressionDefined(false),pUtils(0),pluginName("Pressure"){};

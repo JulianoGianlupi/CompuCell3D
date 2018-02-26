@@ -192,14 +192,14 @@ void PressurePlugin::handleEvent(CC3DEvent & _event){
 double PressurePlugin::customExpressionFunction(double _lambdaPressure,/*double _targetPressure,*/ double _volumeBefore,double _volumeAfter){
 
 		int currentWorkNodeNumber=pUtils->getCurrentWorkNodeNumber();	
-		ExpressionEvaluator & ev=eed[currentWorkNodeNumber];
+		ExpressionEvaluator & ep=eed[currentWorkNodeNumber];
 		double energyBefore=0.0,energyAfter=0.0;
 
 		//before
 		ep[0]=_lambdaPressure;
 		ep[1]=_volumeBefore;
 		//ep[2]=_targetPressure;
-		energyBefore=ev.eval();
+		energyBefore=ep.eval();
 
 		//after		
 		ep[1]=_volumeAfter;		
