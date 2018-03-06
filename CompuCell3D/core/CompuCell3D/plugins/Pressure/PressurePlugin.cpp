@@ -39,7 +39,7 @@ PressurePlugin::~PressurePlugin() {}
 void PressurePlugin::init(Simulator *simulator, CC3DXMLElement *_xmlData){
 	potts = simulator->getPotts();
 	bool pluginAlreadyRegisteredFlag;
-	Plugin *plugin=Simulator::pluginManager.get("PressureTracker",&pluginAlreadyRegisteredFlag); //this will load PressureTracker plugin if it is not already loaded
+	Plugin *plugin=Simulator::pluginManager.get("VolumeTracker",&pluginAlreadyRegisteredFlag); //this will load PressureTracker plugin if it is not already loaded
 
 
 	pUtils=simulator->getParallelUtils();

@@ -36,7 +36,7 @@ namespace CompuCell3D {
 
 	class PRESSURE_EXPORT PressureEnergyParam{
 	public:
-		PressureEnergyParam():targetPressure(0.0),lambdaPressure(0.0){}
+		PressureEnergyParam():/*Pressure(0.0),*/lambdaPressure(0.0){}
 		//double targetPressure;
 		double lambdaPressure;
 		std::string typeName;
