@@ -61,9 +61,9 @@ void PressurePlugin::init(Simulator *simulator, CC3DXMLElement *_xmlData){
 void PressurePlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 	//if there are no child elements for this plugin it means will use changeEnergyByCellId
 
-	if(potts->getDisplayUnitsFlag()){
+	/*if(potts->getDisplayUnitsFlag()){
 		Unit PressureUnit=powerUnit(potts->getLengthUnit(),3);
-		Unit lambdaPressureUnit=potts->getEnergyUnit()/targetPressureUnit;
+		Unit lambdaPressureUnit=potts->getEnergyUnit()/PressureUnit;
 		//Unit demoUnit("10^-15*kg");
 		//cerr<<"demoUnit="<<demoUnit<<endl;
 		//cerr<<"Length Unit"<<potts->getLengthUnit()<<endl;
@@ -93,7 +93,7 @@ void PressurePlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 		}
 
 
-	}
+	}*/
 
 	
 
@@ -103,7 +103,7 @@ void PressurePlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 		vector<string> variableNames;
 		variableNames.push_back("LambdaPressure");
 		variableNames.push_back("Pressure");
-		variableNames.push_back("Vtarget");
+		//variableNames.push_back("Vtarget");
 
 		eed.addVariables(variableNames.begin(),variableNames.end());
 		eed.update(_xmlData->getFirstElement("PressureEnergyExpression"));			
@@ -328,11 +328,11 @@ double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCe
 	}else{
 
 		if (newCell){
-			energy+=customExpressionFunction(newCell->lambdaPressure/*,newCell->targetPressure,*/newCell->volume,newCell->volume+1);
+			energy+=customExpressionFunction(newCell->lambdaPressure,/*newCell->targetPressure,*/newCell->volume,newCell->volume+1);
 		}
 
 		if (oldCell){
-			energy+=customExpressionFunction(oldCell->lambdaPressure/*,oldCell->targetPressure,*/oldCell->volume,oldCell->volume-1);
+			energy+=customExpressionFunction(oldCell->lambdaPressure,/*oldCell->targetPressure,*/oldCell->volume,oldCell->volume-1);
 
 		}		
 		return energy;
