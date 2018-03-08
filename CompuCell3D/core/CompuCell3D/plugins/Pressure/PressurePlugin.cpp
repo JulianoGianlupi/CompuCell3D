@@ -67,12 +67,12 @@ void PressurePlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 		//Unit demoUnit("10^-15*kg");
 		//cerr<<"demoUnit="<<demoUnit<<endl;
 		//cerr<<"Length Unit"<<potts->getLengthUnit()<<endl;
-		//cerr<<"targetPressureUnit="<<targetPressureUnit.toString()<<endl;
+		//cerr<<"PressureUnit="<<PressureUnit.toString()<<endl;
 		//cerr<<"lambdaPressureUnit="<<lambdaPressureUnit.toString()<<endl;
 
 
-		//CC3DXMLElement * pressureUnitElem = _xmlData->attachElement("TargetPressureUnit",targetPressureUnit.toString());
-		//CC3DXMLElement * pressureUnitElem1 = _xmlData->attachElement("TargetPressureUnit1",targetPressureUnit.toString());
+		//CC3DXMLElement * pressureUnitElem = _xmlData->attachElement("TargetPressureUnit",PressureUnit.toString());
+		//CC3DXMLElement * pressureUnitElem1 = _xmlData->attachElement("TargetPressureUnit1",PressureUnit.toString());
 		//CC3DXMLElement * pressureUnitElem2 = _xmlData->attachElement("TargetPressureUnit2","demoElement");
 
 		CC3DXMLElement * unitsElem=_xmlData->getFirstElement("Units"); 
@@ -81,9 +81,9 @@ void PressurePlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 		}
 
 		if(unitsElem->getFirstElement("TargetPressureUnit")){
-			unitsElem->getFirstElement("TargetPressureUnit")->updateElementValue(targetPressureUnit.toString());
+			unitsElem->getFirstElement("TargetPressureUnit")->updateElementValue(PressureUnit.toString());
 		}else{
-			CC3DXMLElement * pressureUnitElem = unitsElem->attachElement("TargetPressureUnit",targetPressureUnit.toString());
+			CC3DXMLElement * pressureUnitElem = unitsElem->attachElement("TargetPressureUnit",PressureUnit.toString());
 		}
 
 		if(unitsElem->getFirstElement("LambdaPressureUnit")){
@@ -144,7 +144,7 @@ void PressurePlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 				for (int i = 0 ; i<energyVec.size(); ++i){
 					PressureEnergyParam preParam;
 
-					//preParam.targetPressure=energyVec[i]->getAttributeAsDouble("TargetPressure");
+					preParam.Pressure=energyVec[i]->getAttributeAsDouble("Pressure");
 					preParam.lambdaPressure=energyVec[i]->getAttributeAsDouble("LambdaPressure");
 					preParam.typeName=energyVec[i]->getAttribute("CellType");
 					cerr<<"automaton="<<automaton<<endl;
@@ -166,7 +166,7 @@ void PressurePlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 
 		case GLOBAL:
 			//using Global Pressure Energy Parameters
-			//targetPressure=_xmlData->getFirstElement("TargetPressure")->getDouble();
+			//Pressure=_xmlData->getFirstElement("TargetPressure")->getDouble();
 			lambdaPressure=_xmlData->getFirstElement("LambdaPressure")->getDouble();			
 			//set fcn ptr
 			changeEnergyFcnPtr=&PressurePlugin::changeEnergyGlobal;
@@ -189,21 +189,21 @@ void PressurePlugin::handleEvent(CC3DEvent & _event){
     }
 
 }
-double PressurePlugin::customExpressionFunction(double _lambdaPressure,/*double _targetPressure,*/ double _volumeBefore,double _volumeAfter){
+double PressurePlugin::customExpressionFunction(double _lambdaPressure,double _Pressure, double _volumeBefore,double _volumeAfter){
 
 		int currentWorkNodeNumber=pUtils->getCurrentWorkNodeNumber();	
-		ExpressionEvaluator & ep=eed[currentWorkNodeNumber];
+		ExpressionEvaluator & ev=eed[currentWorkNodeNumber];
 		double energyBefore=0.0,energyAfter=0.0;
 
 		//before
-		ep[0]=_lambdaPressure;
-		ep[1]=_volumeBefore;
-		//ep[2]=_targetPressure;
-		energyBefore=ep.eval();
+		ev[0]=_lambdaPressure;
+		ev[1]=_volumeBefore;
+		ev[2]=_Pressure;
+		energyBefore=ev.eval();
 
 		//after		
-		ep[1]=_volumeAfter;		
-		energyAfter=ep.eval();
+		ev[1]=_volumeAfter;
+		energyAfter=ev.eval();
 
 		return energyAfter-energyBefore;
 }
@@ -244,11 +244,11 @@ double PressurePlugin::changeEnergyGlobal(const Point3D &pt, const CellG *newCel
 	}else{
 
 		if (newCell){
-			energy+=customExpressionFunction(lambdaPressure,/*targetPressure,*/newCell->volume,newCell->volume+1);
+			energy+=customExpressionFunction(lambdaPressure,pressure,newCell->volume,newCell->volume+1);
 		}
 		
 		if (oldCell){
-			energy+=customExpressionFunction(lambdaPressure,/*targetPressure,*/oldCell->volume,oldCell->volume-1);
+			energy+=customExpressionFunction(lambdaPressure,pressure,oldCell->volume,oldCell->volume-1);
 
 		}		
 		return energy;
@@ -284,11 +284,11 @@ double PressurePlugin::changeEnergyByCellType(const Point3D &pt,const CellG *new
 	}else{
 
 		if (newCell){
-			energy+=customExpressionFunction(pressureEnergyParamVector[newCell->type].lambdaPressure/*,fabs(pressureEnergyParamVector[newCell->type].targetPressure*/),newCell->volume,newCell->volume+1);
+			energy-=customExpressionFunction(pressureEnergyParamVector[newCell->type].lambdaPressure,fabs(pressureEnergyParamVector[newCell->type].Pressure),newCell->volume,newCell->volume+1);
 		}
 
 		if (oldCell){
-			energy+=customExpressionFunction(pressureEnergyParamVector[oldCell->type].lambdaPressure/*,fabs(pressureEnergyParamVector[oldCell->type].targetPressure*/),oldCell->volume,oldCell->volume-1);
+			energy+=customExpressionFunction(pressureEnergyParamVector[oldCell->type].lambdaPressure,fabs(pressureEnergyParamVector[oldCell->type].Pressure),oldCell->volume,oldCell->volume-1);
 
 		}		
 		return energy;
@@ -328,11 +328,11 @@ double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCe
 	}else{
 
 		if (newCell){
-			energy+=customExpressionFunction(newCell->lambdaPressure,/*newCell->targetPressure,*/newCell->volume,newCell->volume+1);
+			energy+=customExpressionFunction(newCell->lambdaPressure,newCell->Pressure,newCell->volume,newCell->volume+1);
 		}
 
 		if (oldCell){
-			energy+=customExpressionFunction(oldCell->lambdaPressure,/*oldCell->targetPressure,*/oldCell->volume,oldCell->volume-1);
+			energy+=customExpressionFunction(oldCell->lambdaPressure,oldCell->Pressure,oldCell->volume,oldCell->volume-1);
 
 		}		
 		return energy;
