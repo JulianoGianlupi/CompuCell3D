@@ -65,7 +65,7 @@ namespace CompuCell3D {
 		double changeEnergyGlobal(const Point3D &pt, const CellG *newCell,const CellG *oldCell);
 		double changeEnergyByCellType(const Point3D &pt, const CellG *newCell,const CellG *oldCell);
 		double changeEnergyByCellId(const Point3D &pt, const CellG *newCell,const CellG *oldCell);
-		double customExpressionFunction(double _lambdaPressure/*,double _targetPressure*/, double _volumeBefore,double _volumeAfter);
+		double customExpressionFunction(double _lambdaPressure,double _Pressure, double _volumeBefore,double _volumeAfter);
 
 	public:
 		PressurePlugin():potts(0),energyExpressionDefined(false),pUtils(0),pluginName("Pressure"){};
