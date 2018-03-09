@@ -328,11 +328,11 @@ double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCe
 	}else{
 
 		if (newCell){
-			energy+=customExpressionFunction(newCell->lambdaPressure,newCell->Pressure,newCell->volume,newCell->volume+1);
+			energy+=customExpressionFunction(newCell->lambdaPressure,newCell->pressure,newCell->volume,newCell->volume+1);
 		}
 
 		if (oldCell){
-			energy+=customExpressionFunction(oldCell->lambdaPressure,oldCell->Pressure,oldCell->volume,oldCell->volume-1);
+			energy+=customExpressionFunction(oldCell->lambdaPressure,oldCell->pressure,oldCell->volume,oldCell->volume-1);
 
 		}		
 		return energy;
