@@ -144,7 +144,7 @@ void PressurePlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 				for (int i = 0 ; i<energyVec.size(); ++i){
 					PressureEnergyParam preParam;
 
-					preParam.Pressure=energyVec[i]->getAttributeAsDouble("Pressure");
+					preParam.pressure=energyVec[i]->getAttributeAsDouble("Pressure");
 					preParam.lambdaPressure=energyVec[i]->getAttributeAsDouble("LambdaPressure");
 					preParam.typeName=energyVec[i]->getAttribute("CellType");
 					cerr<<"automaton="<<automaton<<endl;
@@ -189,7 +189,7 @@ void PressurePlugin::handleEvent(CC3DEvent & _event){
     }
 
 }
-double PressurePlugin::customExpressionFunction(double _lambdaPressure,double _Pressure, double _volumeBefore,double _volumeAfter){
+double PressurePlugin::customExpressionFunction(double _lambdaPressure,double _pressure, double _volumeBefore,double _volumeAfter){
 
 		int currentWorkNodeNumber=pUtils->getCurrentWorkNodeNumber();	
 		ExpressionEvaluator & ev=eed[currentWorkNodeNumber];
@@ -198,7 +198,7 @@ double PressurePlugin::customExpressionFunction(double _lambdaPressure,double _P
 		//before
 		ev[0]=_lambdaPressure;
 		ev[1]=_volumeBefore;
-		ev[2]=_Pressure;
+		ev[2]=_pressure;
 		energyBefore=ev.eval();
 
 		//after		
@@ -284,11 +284,11 @@ double PressurePlugin::changeEnergyByCellType(const Point3D &pt,const CellG *new
 	}else{
 
 		if (newCell){
-			energy-=customExpressionFunction(pressureEnergyParamVector[newCell->type].lambdaPressure,fabs(pressureEnergyParamVector[newCell->type].Pressure),newCell->volume,newCell->volume+1);
+			energy-=customExpressionFunction(pressureEnergyParamVector[newCell->type].lambdaPressure,fabs(pressureEnergyParamVector[newCell->type].pressure),newCell->volume,newCell->volume+1);
 		}
 
 		if (oldCell){
-			energy+=customExpressionFunction(pressureEnergyParamVector[oldCell->type].lambdaPressure,fabs(pressureEnergyParamVector[oldCell->type].Pressure),oldCell->volume,oldCell->volume-1);
+			energy+=customExpressionFunction(pressureEnergyParamVector[oldCell->type].lambdaPressure,fabs(pressureEnergyParamVector[oldCell->type].pressure),oldCell->volume,oldCell->volume-1);
 
 		}		
 		return energy;
