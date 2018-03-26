@@ -29,7 +29,7 @@ using namespace CompuCell3D;
 
 using namespace std;
 
-#include "VolumePlugin.h"
+
 #include "PressurePlugin.h"
 
 
