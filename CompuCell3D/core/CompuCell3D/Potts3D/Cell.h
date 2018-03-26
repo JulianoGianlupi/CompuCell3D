@@ -44,6 +44,8 @@ namespace CompuCell3D {
         volume(0),
         targetVolume(0.0),
         lambdaVolume(0.0),
+		pressure(0.0),
+		lambdaPressure(0.0),
         surface(0),
         targetSurface(0.0),
         lambdaSurface(0.0),
@@ -72,6 +74,8 @@ namespace CompuCell3D {
       long volume;
       float targetVolume;
       float lambdaVolume;
+      float pressure;
+	  float lambdaPressure;
       double surface;
       float targetSurface;
       float angle;
