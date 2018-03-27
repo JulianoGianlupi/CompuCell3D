@@ -354,12 +354,12 @@ double PressurePlugin::changeEnergy(const Point3D &pt,const CellG *newCell,const
 }
 
 
-std::string VolumePlugin::steerableName(){
+std::string PressurePlugin::steerableName(){
 	return pluginName;
 	//return "Volume";
 }
 
-std::string VolumePlugin::toString(){
+std::string PressurePlugin::toString(){
 	return pluginName;
 	//return "Volume";
 }
