@@ -282,11 +282,11 @@ double PressurePlugin::changeEnergyByCellType(const Point3D &pt,const CellG *new
 	}else{
 
 		if (newCell){
-			energy+=customExpressionFunction(volumeEnergyParamVector[newCell->type].lambdaPressure,fabs(volumeEnergyParamVector[newCell->type].Pressure),newCell->volume,newCell->volume+1);
+			energy+=customExpressionFunction(pressureEnergyParamVector[newCell->type].lambdaPressure,fabs(pressureEnergyParamVector[newCell->type].Pressure),newCell->volume,newCell->volume+1);
 		}
 
 		if (oldCell){
-			energy+=customExpressionFunction(volumeEnergyParamVector[oldCell->type].lambdaPressure,fabs(volumeEnergyParamVector[oldCell->type].Pressure),oldCell->volume,oldCell->volume-1);
+			energy+=customExpressionFunction(pressureEnergyParamVector[oldCell->type].lambdaPressure,fabs(pressureEnergyParamVector[oldCell->type].Pressure),oldCell->volume,oldCell->volume-1);
 
 		}		
 		return energy;
@@ -327,11 +327,11 @@ double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCe
 	}else{
 
 		if (newCell){
-			energy+=customExpressionFunction(newCell->lambdaVolume,newCell->targetVolume,newCell->volume,newCell->volume+1);
+			energy+=customExpressionFunction(newCell->lambdaPressure,newCell->Pressure,newCell->volume,newCell->volume+1);
 		}
 
 		if (oldCell){
-			energy+=customExpressionFunction(oldCell->lambdaVolume,oldCell->targetVolume,oldCell->volume,oldCell->volume-1);
+			energy+=customExpressionFunction(oldCell->lambdaPressure,oldCell->Pressure,oldCell->volume,oldCell->volume-1);
 
 		}		
 		return energy;
