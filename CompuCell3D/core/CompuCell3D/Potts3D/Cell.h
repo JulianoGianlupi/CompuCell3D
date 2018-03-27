@@ -74,8 +74,8 @@ namespace CompuCell3D {
       long volume;
       float targetVolume;
       float lambdaVolume;
-      float pressure;
-	  float lambdaPressure;
+      float pressure;//new, pressure plugin
+	  float lambdaPressure;//new, pressure plugin
       double surface;
       float targetSurface;
       float angle;
