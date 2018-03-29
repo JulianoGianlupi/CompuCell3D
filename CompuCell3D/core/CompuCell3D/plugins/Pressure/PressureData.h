@@ -5,6 +5,9 @@
  *      Author: jfgianlupi
  */
 
+#ifndef PRESSUREDATA_H
+#define PRESSUREDATA_H
+
 #include <vector>
 #include "PressureDLLSpecifier.h"
 
