@@ -24,7 +24,6 @@
 #define PRESSUREPLUGIN_H
 
 #include <CompuCell3D/CC3D.h>
-#include "PressureData.h"
 
 #include "PressureDLLSpecifier.h"
 

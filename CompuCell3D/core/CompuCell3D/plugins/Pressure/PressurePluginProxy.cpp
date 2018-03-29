@@ -20,8 +20,9 @@
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.        *
  *************************************************************************/
 
-#include <CompuCell3D/Simulator.h>
+
 #include "PressurePlugin.h"
+#include <CompuCell3D/Simulator.h>
 using namespace CompuCell3D;
 
 #include <BasicUtils/BasicPluginProxy.h>
