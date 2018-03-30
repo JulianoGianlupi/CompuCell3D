@@ -64,16 +64,6 @@ void PressurePlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 	if(potts->getDisplayUnitsFlag()){
 		Unit PressureUnit=powerUnit(potts->getLengthUnit(),3);
 		Unit lambdaPressureUnit=potts->getEnergyUnit()/(Pressure);
-		//Unit demoUnit("10^-15*kg");
-		//cerr<<"demoUnit="<<demoUnit<<endl;
-		//cerr<<"Length Unit"<<potts->getLengthUnit()<<endl;
-		//cerr<<"targetVolumeUnit="<<targetVolumeUnit.toString()<<endl;
-		//cerr<<"lambdaVolumeUnit="<<lambdaVolumeUnit.toString()<<endl;
-
-
-		//CC3DXMLElement * volumeUnitElem = _xmlData->attachElement("TargetVolumeUnit",targetVolumeUnit.toString());
-		//CC3DXMLElement * volumeUnitElem1 = _xmlData->attachElement("TargetVolumeUnit1",targetVolumeUnit.toString());
-		//CC3DXMLElement * volumeUnitElem2 = _xmlData->attachElement("TargetVolumeUnit2","demoElement");
 
 		CC3DXMLElement * unitsElem=_xmlData->getFirstElement("Units"); 
 		if (!unitsElem){ //add Units element
@@ -83,7 +73,7 @@ void PressurePlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 		if(unitsElem->getFirstElement("PressureUnit")){
 			unitsElem->getFirstElement("PressureUnit")->updateElementValue(PressureUnit.toString());
 		}else{
-			CC3DXMLElement * volumeUnitElem = unitsElem->attachElement("PressureUnit",PressureUnit.toString());
+			CC3DXMLElement * pressureUnitElem = unitsElem->attachElement("PressureUnit",PressureUnit.toString());
 		}
 
 		if(unitsElem->getFirstElement("LambdaPressureUnit")){
@@ -300,7 +290,7 @@ double PressurePlugin::changeEnergyByCellType(const Point3D &pt,const CellG *new
 
 double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCell,const CellG *oldCell) {
 
-	/// E = lambda * (volume - targetVolume) ^ 2 
+	/// E = - lambda * p
 
 	double energy = 0;
 
@@ -309,12 +299,12 @@ double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCe
 	if (!energyExpressionDefined){
 
 		if (newCell){
-			energy -=  newCell->lambdaPressure*newCell->Pressure;
+			energy -=  (newCell->lambdaPressure)*(newCell->Pressure);
 			//energy +=  newCell->lambdaVolume*
 				//(1 + 2 * ((int)newCell->volume - newCell->targetVolume));
 		}
 		if (oldCell){
-			energy +=  newCell->lambdaPressure*newCell->Pressure;
+			energy +=  (newCell->lambdaPressure)*(newCell->Pressure);
 			//energy += oldCell->lambdaVolume*
 				//(1 - 2 * ((int)oldCell->volume - oldCell->targetVolume));
 		}
