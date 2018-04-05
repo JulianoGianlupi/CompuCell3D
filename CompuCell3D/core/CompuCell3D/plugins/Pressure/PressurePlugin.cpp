@@ -32,7 +32,7 @@ using namespace std;
 #include "PressurePlugin.h"
 
 
-// VolumePlugin::VolumePlugin() : potts(0) {}
+// PressurePlugin::PressurePlugin() : potts(0) {}
 
 PressurePlugin::~PressurePlugin() {}
 
@@ -92,8 +92,8 @@ void PressurePlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 		eed.allocateSize(maxNumberOfWorkNodes);
 		vector<string> variableNames;
 		variableNames.push_back("LambdaPressure");
-		variableNames.push_back("Volume");
 		variableNames.push_back("Pressure");
+		variableNames.push_back("Volume");
 
 		eed.addVariables(variableNames.begin(),variableNames.end());
 		eed.update(_xmlData->getFirstElement("PressureEnergyExpression"));
@@ -179,7 +179,7 @@ void PressurePlugin::handleEvent(CC3DEvent & _event){
     }
 
 }
-double PressurePlugin::customExpressionFunction(double _lambdaPressure,double _Pressure, double _volumeBefore,double _volumeAfter){
+double PressurePlugin::customExpressionFunction(double _lambdaPressure,double _Pressure, double _volumeBefore,double _volumeAfter){////////
 
 		int currentWorkNodeNumber=pUtils->getCurrentWorkNodeNumber();	
 		ExpressionEvaluator & ep=eed[currentWorkNodeNumber];
@@ -205,7 +205,7 @@ double PressurePlugin::changeEnergyGlobal(const Point3D &pt, const CellG *newCel
 	if (oldCell == newCell) return 0;
 
 	if (!energyExpressionDefined){
-		//as in the original version 
+
 		if (newCell){
 			energy -= lambdaPressure * Pressure;
 
