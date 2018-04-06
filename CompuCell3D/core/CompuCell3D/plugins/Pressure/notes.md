@@ -7,4 +7,6 @@ pressure segfaults
 
 * by cell type seg faults
 
+* by cell id seg faults
+
 * not using XML need to be tested
