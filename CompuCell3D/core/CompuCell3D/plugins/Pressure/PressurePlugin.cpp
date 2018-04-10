@@ -182,22 +182,23 @@ void PressurePlugin::handleEvent(CC3DEvent & _event){
 double PressurePlugin::customExpressionFunction(double _lambdaPressure,double _Pressure, double _volumeBefore,double _volumeAfter){////////
 
 		int currentWorkNodeNumber=pUtils->getCurrentWorkNodeNumber();	
-		ExpressionEvaluator & ep=eed[currentWorkNodeNumber];
+		ExpressionEvaluator & ev=eed[currentWorkNodeNumber];
 		double energyBefore=0.0,energyAfter=0.0;
 
 		//before
-		ep[0]=_lambdaPressure;
-		ep[1]=_volumeBefore;
-		ep[2]=_Pressure;
-		energyBefore=ep.eval();
+		ev[0]=_lambdaPressure;
+		ev[1]=_volumeBefore;
+		ev[2]=_Pressure;
+		energyBefore=ev.eval();
 
 		//after		
-		ep[1]=_volumeAfter;
-		energyAfter=ep.eval();
+		ev[1]=_volumeAfter;
+		energyAfter=ev.eval();
 
 		return energyAfter-energyBefore;
 }
 
+// I'm as lambda pressure and pressure are pretty much the same thing I'm removing pressure.
 double PressurePlugin::changeEnergyGlobal(const Point3D &pt, const CellG *newCell,const CellG *oldCell){
 
 	double energy = 0;
@@ -207,29 +208,16 @@ double PressurePlugin::changeEnergyGlobal(const Point3D &pt, const CellG *newCel
 	if (!energyExpressionDefined){
 
 		if (newCell){
-			energy -= lambdaPressure * Pressure;
+			energy -= lambdaPressure/* * Pressure*/;
 
 		}
 		if (oldCell){
-			energy += lambdaPressure * Pressure;
+			energy += lambdaPressure /* Pressure*/;
 
 		}
-
-
-		//cerr<<"energy="<<energy<<endl;
-		//if (energy>300){
-		//	if (newCell){
-		//		cerr<<"newCell->volume="<<newCell->volume<<endl;
-		//	}
-		//	if (oldCell){
-		//		cerr<<"oldCell->volume="<<oldCell->volume<<endl;
-		//	}
-
-
-		//}
 		return energy;
 	}else{
-
+/* DONT FORGET TO UNCOMENT THIS!!!!!
 		if (newCell){
 			energy+=customExpressionFunction(lambdaPressure,Pressure,newCell->volume,newCell->volume+1);
 		}
@@ -239,8 +227,8 @@ double PressurePlugin::changeEnergyGlobal(const Point3D &pt, const CellG *newCel
 
 		}		
 		return energy;
-		
-
+*/
+		return 0; //AND TO DELETE THIS!
 	}
 
 
@@ -248,7 +236,7 @@ double PressurePlugin::changeEnergyGlobal(const Point3D &pt, const CellG *newCel
 
 double PressurePlugin::changeEnergyByCellType(const Point3D &pt,const CellG *newCell,const CellG *oldCell) {
 
-	/// E = - lambda * Pressure
+	/// E = -   Pressure
 
 	double energy = 0;
 
@@ -256,11 +244,11 @@ double PressurePlugin::changeEnergyByCellType(const Point3D &pt,const CellG *new
 
 	if (!energyExpressionDefined){
 		if (newCell)
-			energy -= pressureEnergyParamVector[newCell->type].lambdaPressure * pressureEnergyParamVector[newCell->type].Pressure;
+			energy -= pressureEnergyParamVector[newCell->type].lambdaPressure; //* pressureEnergyParamVector[newCell->type].Pressure;
 			//(1 + 2 * (newCell->volume - fabs(volumeEnergyParamVector[newCell->type].targetVolume)));
 
 		if (oldCell)
-			energy += pressureEnergyParamVector[newCell->type].lambdaPressure * pressureEnergyParamVector[newCell->type].Pressure;
+			energy += pressureEnergyParamVector[oldCell->type].lambdaPressure; //* pressureEnergyParamVector[newCell->type].Pressure;
 			//energy += volumeEnergyParamVector[oldCell->type].lambdaVolume  *
 			//(1 - 2 * (oldCell->volume - fabs(volumeEnergyParamVector[oldCell->type].targetVolume)));
 
@@ -270,7 +258,7 @@ double PressurePlugin::changeEnergyByCellType(const Point3D &pt,const CellG *new
 
 
 	}else{
-
+/*DONT FORGET TO UNCOMENT THIS!!!!!
 		if (newCell){
 			energy+=customExpressionFunction(pressureEnergyParamVector[newCell->type].lambdaPressure,fabs(pressureEnergyParamVector[newCell->type].Pressure),newCell->volume,newCell->volume+1);
 		}
@@ -280,8 +268,8 @@ double PressurePlugin::changeEnergyByCellType(const Point3D &pt,const CellG *new
 
 		}		
 		return energy;
-
-
+*/
+		return 0;
 	}
 
 
@@ -290,7 +278,7 @@ double PressurePlugin::changeEnergyByCellType(const Point3D &pt,const CellG *new
 
 double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCell,const CellG *oldCell) {
 
-	/// E = - lambda * p
+	/// E = - lambda
 
 	double energy = 0;
 
@@ -299,12 +287,12 @@ double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCe
 	if (!energyExpressionDefined){
 
 		if (newCell){
-			energy -=  (newCell->lambdaPressure)*(newCell->Pressure);
+			energy -=  (newCell->lambdaPressure);//*(newCell->Pressure);
 			//energy +=  newCell->lambdaVolume*
 				//(1 + 2 * ((int)newCell->volume - newCell->targetVolume));
 		}
 		if (oldCell){
-			energy +=  (newCell->lambdaPressure)*(newCell->Pressure);
+			energy +=  (oldCell->lambdaPressure);//*(newCell->Pressure);
 			//energy += oldCell->lambdaVolume*
 				//(1 - 2 * ((int)oldCell->volume - oldCell->targetVolume));
 		}
@@ -315,7 +303,7 @@ double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCe
 
 
 	}else{
-
+/*DONT FORGET TO UNCOMENT THIS!!!!!
 		if (newCell){
 			energy+=customExpressionFunction(newCell->lambdaPressure,newCell->Pressure,newCell->volume,newCell->volume+1);
 		}
@@ -325,8 +313,8 @@ double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCe
 
 		}		
 		return energy;
-
-
+*/
+		return 0;
 	}
 
 
