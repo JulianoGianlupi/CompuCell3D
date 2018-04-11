@@ -269,7 +269,7 @@ double PressurePlugin::changeEnergyByCellType(const Point3D &pt,const CellG *new
 		}		
 		return energy;
 */
-		return 0;
+		return 0;//AND TO DELETE THIS!
 	}
 
 
@@ -314,7 +314,7 @@ double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCe
 		}		
 		return energy;
 */
-		return 0;
+		return 0;//AND TO DELETE THIS!
 	}
 
 

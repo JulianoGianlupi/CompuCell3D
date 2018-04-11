@@ -10,3 +10,7 @@ pressure segfaults
 * by cell id seg faults
 
 * not using XML need to be tested
+
+# The issue seems to be with 
+
+vtkDataArrayTemplate<float>::GetTuple(long long, double*)
