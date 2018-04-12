@@ -1,0 +1,182 @@
+Undefined command: "sell".  Try "help".
+Undefined command: "sell".  Try "help".
+#0  0x00007ffff545095c in vtkDataArrayTemplate<float>::GetTuple(long long, double*) () from /usr/lib/x86_64-linux-gnu/libvtkCommonCore-6.2.so.6.2
+#1  0x00007ffff22d750f in vtkPolyData::ComputeBounds() () from /usr/lib/x86_64-linux-gnu/libvtkCommonDataModel-6.2.so.6.2
+#2  0x00007ffff21d3255 in vtkDataSet::GetBounds(double*) () from /usr/lib/x86_64-linux-gnu/libvtkCommonDataModel-6.2.so.6.2
+#3  0x00007fffd60e0bb9 in vtkPainterPolyDataMapper::ComputeBounds() () from /usr/lib/x86_64-linux-gnu/libvtkRenderingOpenGL-6.2.so.6.2
+#4  0x00007fffeb341a4e in vtkPolyDataMapper::GetBounds() () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCore-6.2.so.6.2
+#5  0x00007fffeb25ca7b in vtkActor::GetBounds() () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCore-6.2.so.6.2
+#6  0x00007fffeb35f795 in vtkRenderer::ComputeVisiblePropBounds(double*) () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCore-6.2.so.6.2
+#7  0x00007fffeb35fca8 in vtkRenderer::ResetCamera() () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCore-6.2.so.6.2
+#8  0x00007fffeb3d1711 in vtkInteractorStyle::OnChar() () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCore-6.2.so.6.2
+#9  0x00007fffeb3cf8fa in vtkInteractorStyle::ProcessEvents(vtkObject*, unsigned long, void*, void*) () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCore-6.2.so.6.2
+#10 0x00007ffff53be029 in vtkCallbackCommand::Execute(vtkObject*, unsigned long, void*) () from /usr/lib/x86_64-linux-gnu/libvtkCommonCore-6.2.so.6.2
+#11 0x00007ffff54a2b99 in ?? () from /usr/lib/x86_64-linux-gnu/libvtkCommonCore-6.2.so.6.2
+#12 0x00007fffeb81de39 in ?? () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCorePython27D-6.2.so.6.2
+#13 0x00000000004bc3fa in call_function (oparg=<optimized out>, pp_stack=0x7fffffffba70) at ../Python/ceval.c:4350
+#14 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#15 0x00000000004c136f in fast_function (nk=<optimized out>, na=<optimized out>, n=1, pp_stack=0x7fffffffbb90, func=<function at remote 0x7fff7c15b230>) at ../Python/ceval.c:4435
+#16 call_function (oparg=<optimized out>, pp_stack=0x7fffffffbb90) at ../Python/ceval.c:4370
+#17 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#18 0x00000000004c136f in fast_function (nk=<optimized out>, na=<optimized out>, n=3, pp_stack=0x7fffffffbcb0, func=<function at remote 0x7fff7c0a3cf8>) at ../Python/ceval.c:4435
+#19 call_function (oparg=<optimized out>, pp_stack=0x7fffffffbcb0) at ../Python/ceval.c:4370
+#20 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#21 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#22 0x00000000004c16e7 in fast_function (nk=<optimized out>, na=<optimized out>, n=<optimized out>, pp_stack=0x7fffffffbeb0, func=<function at remote 0x7fff7c0a3c80>) at ../Python/ceval.c:4445
+#23 call_function (oparg=<optimized out>, pp_stack=0x7fffffffbeb0) at ../Python/ceval.c:4370
+#24 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#25 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#26 0x00000000004c1e6f in fast_function (nk=<optimized out>, na=<optimized out>, n=1, pp_stack=0x7fffffffc0b0, func=<function at remote 0x7fff6b095a28>) at ../Python/ceval.c:4445
+#27 call_function (oparg=<optimized out>, pp_stack=0x7fffffffc0b0) at ../Python/ceval.c:4370
+#28 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#29 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#30 0x00000000004c1e6f in fast_function (nk=<optimized out>, na=<optimized out>, n=1, pp_stack=0x7fffffffc2b0, func=<function at remote 0x7fff6b095c08>) at ../Python/ceval.c:4445
+#31 call_function (oparg=<optimized out>, pp_stack=0x7fffffffc2b0) at ../Python/ceval.c:4370
+#32 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#33 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#34 0x00000000004c1e6f in fast_function (nk=<optimized out>, na=<optimized out>, n=2, pp_stack=0x7fffffffc4b0, func=<function at remote 0x7fff6b094410>) at ../Python/ceval.c:4445
+#35 call_function (oparg=<optimized out>, pp_stack=0x7fffffffc4b0) at ../Python/ceval.c:4370
+#36 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#37 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#38 0x00000000004c1e6f in fast_function (nk=<optimized out>, na=<optimized out>, n=1, pp_stack=0x7fffffffc6b0, func=<function at remote 0x7fff6b094938>) at ../Python/ceval.c:4445
+#39 call_function (oparg=<optimized out>, pp_stack=0x7fffffffc6b0) at ../Python/ceval.c:4370
+#40 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#41 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#42 0x00000000004c1e6f in fast_function (nk=<optimized out>, na=<optimized out>, n=1, pp_stack=0x7fffffffc8b0, func=<function at remote 0x7fff6b0951b8>) at ../Python/ceval.c:4445
+#43 call_function (oparg=<optimized out>, pp_stack=0x7fffffffc8b0) at ../Python/ceval.c:4370
+#44 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#45 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#46 0x00000000004d54b9 in function_call.lto_priv () at ../Objects/funcobject.c:523
+#47 0x00000000004eebee in PyObject_Call (kw=0x0, 
+    arg=(<SimpleTabView(_SimpleTabView__parent=<UserInterface(stdout=<Redirector(buffer='', stdErrConsole=None, stderr=False) at remote 0x7fff69da3478>, zitems=[<float at remote 0x11e4cb8>, <float at remote 0x11e4ca0>, <float at remote 0x11e4c88>, 1, <float at remote 0x11e4c70>, <float at remote 0x11e4c58>, <float at remote 0x11e4c40>, <float at remote 0x11e4c28>, <float at remote 0x11e4c10>, <float at remote 0x11e4bf8>, <float at remote 0x131f7c8>], actions=[<QAction at remote 0x7fff69da35a8>, <QAction at remote 0x7fff69da3640>, <QAction at remote 0x7fff69da36d8>, <QAction at remote 0x7fff69da3770>, <QAction at remote 0x7fff69da3808>, <QAction at remote 0x7fff69da38a0>, <QAction at remote 0x7fff69da3938>], toolbarFileAct=<...>, _UserInterface__statusBar=<QStatusBar at remote 0x7fff69e64050>, toolbarSimAct=<...>, origStdout=<file at remote 0x7ffff7fa0150>, dockwindows={}, pluginsAct=<...>, consoleAct=<...>, consoleDock=<DockWidget(toggleFcn=<instancemethod at remote 0x7fff7c1280f0>) at remote 0x7fff69e64938>, lattice...(truncated), func=<function at remote 0x7fff6b095230>) at ../Objects/abstract.c:2546
+#48 instancemethod_call.lto_priv () at ../Objects/classobject.c:2602
+#49 0x00000000004a577e in PyObject_Call () at ../Objects/abstract.c:2546
+#50 0x00000000004c5e10 in PyEval_CallObjectWithKeywords () at ../Python/ceval.c:4219
+#51 0x00007fff9e16c120 in ?? () from /usr/lib/python2.7/dist-packages/PyQt5/QtCore.x86_64-linux-gnu.so
+#52 0x00007fff9e16c598 in ?? () from /usr/lib/python2.7/dist-packages/PyQt5/QtCore.x86_64-linux-gnu.so
+#53 0x00007fff9e162d20 in ?? () from /usr/lib/python2.7/dist-packages/PyQt5/QtCore.x86_64-linux-gnu.so
+#54 0x00007fff9e163657 in ?? () from /usr/lib/python2.7/dist-packages/PyQt5/QtCore.x86_64-linux-gnu.so
+#55 0x00007fffa297ac01 in QObject::event(QEvent*) () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#56 0x00007fffa323e05c in QApplicationPrivate::notify_helper(QObject*, QEvent*) () from /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5
+#57 0x00007fffa3243516 in QApplication::notify(QObject*, QEvent*) () from /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5
+#58 0x00007fff9d1bcabe in ?? () from /usr/lib/python2.7/dist-packages/PyQt5/QtWidgets.x86_64-linux-gnu.so
+#59 0x00007fffa294b38b in QCoreApplication::notifyInternal(QObject*, QEvent*) () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#60 0x00007fffa294d786 in QCoreApplicationPrivate::sendPostedEvents(QObject*, int, QThreadData*) () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#61 0x00007fffa29a13c3 in ?? () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#62 0x00007fffa21ab197 in g_main_context_dispatch () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#63 0x00007fffa21ab3f0 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#64 0x00007fffa21ab49c in g_main_context_iteration () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#65 0x00007fffa29a17cf in QEventDispatcherGlib::processEvents(QFlags<QEventLoop::ProcessEventsFlag>) () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#66 0x00007fffa2948b4a in QEventLoop::exec(QFlags<QEventLoop::ProcessEventsFlag>) () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#67 0x00007fffa2950bec in QCoreApplication::exec() () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#68 0x00007fff9d17fd1b in ?? () from /usr/lib/python2.7/dist-packages/PyQt5/QtWidgets.x86_64-linux-gnu.so
+#69 0x00000000004bc3fa in call_function (oparg=<optimized out>, pp_stack=0x7fffffffd4f0) at ../Python/ceval.c:4350
+#70 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#71 0x00000000004c136f in fast_function (nk=<optimized out>, na=<optimized out>, n=1, pp_stack=0x7fffffffd610, func=<function at remote 0x7fff9cfccc08>) at ../Python/ceval.c:4435
+#72 call_function (oparg=<optimized out>, pp_stack=0x7fffffffd610) at ../Python/ceval.c:4370
+#73 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#74 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#75 0x00000000004eb30f in PyEval_EvalCode (
+    locals={'QAbstractButton': <PyQt5.QtCore.pyqtWrapperType at remote 0x1329410>, 'QTableWidget': <PyQt5.QtCore.pyqtWrapperType at remote 0x1419c20>, 'QSizePolicy': <PyQt5.QtCore.pyqtWrapperType at remote 0x13ee990>, 'QMatrix3x4': <PyQt5.QtCore.pyqtWrapperType at remote 0x1347e60>, 'QMatrix3x3': <PyQt5.QtCore.pyqtWrapperType at remote 0x1347770>, 'QMatrix3x2': <PyQt5.QtCore.pyqtWrapperType at remote 0x1347080>, 'QGraphicsColorizeEffect': <PyQt5.QtCore.pyqtWrapperType at remote 0x13c7e40>, 'qRound64': <built-in function qRound64>, 'QSizeGrip': <PyQt5.QtCore.pyqtWrapperType at remote 0x13ee5b0>, 'QStyleOptionComboBox': <PyQt5.QtCore.pyqtWrapperType at remote 0x13fd190>, 'QTouchDevice': <PyQt5.QtCore.pyqtWrapperType at remote 0x138e9d0>, 'QStringListModel': <PyQt5.QtCore.pyqtWrapperType at remote 0x12eb670>, 'QAbstractSpinBox': <PyQt5.QtCore.pyqtWrapperType at remote 0x13aab60>, 'QTreeView': <PyQt5.QtCore.pyqtWrapperType at remote 0x141eda0>, 'QPoint': <PyQt5.QtCore.pyqtWrapperType at remote 0x12d5c80>, 'QFontComboBox': <...(truncated), 
+    globals={'QAbstractButton': <PyQt5.QtCore.pyqtWrapperType at remote 0x1329410>, 'QTableWidget': <PyQt5.QtCore.pyqtWrapperType at remote 0x1419c20>, 'QSizePolicy': <PyQt5.QtCore.pyqtWrapperType at remote 0x13ee990>, 'QMatrix3x4': <PyQt5.QtCore.pyqtWrapperType at remote 0x1347e60>, 'QMatrix3x3': <PyQt5.QtCore.pyqtWrapperType at remote 0x1347770>, 'QMatrix3x2': <PyQt5.QtCore.pyqtWrapperType at remote 0x1347080>, 'QGraphicsColorizeEffect': <PyQt5.QtCore.pyqtWrapperType at remote 0x13c7e40>, 'qRound64': <built-in function qRound64>, 'QSizeGrip': <PyQt5.QtCore.pyqtWrapperType at remote 0x13ee5b0>, 'QStyleOptionComboBox': <PyQt5.QtCore.pyqtWrapperType at remote 0x13fd190>, 'QTouchDevice': <PyQt5.QtCore.pyqtWrapperType at remote 0x138e9d0>, 'QStringListModel': <PyQt5.QtCore.pyqtWrapperType at remote 0x12eb670>, 'QAbstractSpinBox': <PyQt5.QtCore.pyqtWrapperType at remote 0x13aab60>, 'QTreeView': <PyQt5.QtCore.pyqtWrapperType at remote 0x141eda0>, 'QPoint': <PyQt5.QtCore.pyqtWrapperType at remote 0x12d5c80>, 'QFontComboBox': <...(truncated), co=0x7ffff7e978b0) at ../Python/ceval.c:669
+#76 run_mod.lto_priv () at ../Python/pythonrun.c:1376
+#77 0x00000000004e5422 in PyRun_FileExFlags () at ../Python/pythonrun.c:1362
+#78 0x00000000004e3cd6 in PyRun_SimpleFileExFlags () at ../Python/pythonrun.c:948
+#79 0x0000000000493ae2 in Py_Main () at ../Modules/main.c:640
+#80 0x00007ffff7810830 in __libc_start_main (main=0x4934c0 <main>, argc=3, argv=0x7fffffffda58, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7fffffffda48)
+    at ../csu/libc-start.c:291
+#81 0x00000000004933e9 in _start ()
+Traceback (most recent call first):
+  File "/home/juliano/cc3dcodes/pressure/attempt_2_2/install/player5/compucell3d.pyw", line 253, in main
+    error_code = app.exec_()
+  File "/home/juliano/cc3dcodes/pressure/attempt_2_2/install/player5/compucell3d.pyw", line 258, in <module>
+    error_code = main(sys.argv[1:])
+#0  0x00007ffff545095c in vtkDataArrayTemplate<float>::GetTuple(long long, double*) () from /usr/lib/x86_64-linux-gnu/libvtkCommonCore-6.2.so.6.2
+#1  0x00007ffff22d750f in vtkPolyData::ComputeBounds() () from /usr/lib/x86_64-linux-gnu/libvtkCommonDataModel-6.2.so.6.2
+#2  0x00007ffff21d3255 in vtkDataSet::GetBounds(double*) () from /usr/lib/x86_64-linux-gnu/libvtkCommonDataModel-6.2.so.6.2
+#3  0x00007fffd60e0bb9 in vtkPainterPolyDataMapper::ComputeBounds() () from /usr/lib/x86_64-linux-gnu/libvtkRenderingOpenGL-6.2.so.6.2
+#4  0x00007fffeb341a4e in vtkPolyDataMapper::GetBounds() () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCore-6.2.so.6.2
+#5  0x00007fffeb25ca7b in vtkActor::GetBounds() () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCore-6.2.so.6.2
+#6  0x00007fffeb35f795 in vtkRenderer::ComputeVisiblePropBounds(double*) () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCore-6.2.so.6.2
+#7  0x00007fffeb35fca8 in vtkRenderer::ResetCamera() () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCore-6.2.so.6.2
+#8  0x00007fffeb3d1711 in vtkInteractorStyle::OnChar() () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCore-6.2.so.6.2
+#9  0x00007fffeb3cf8fa in vtkInteractorStyle::ProcessEvents(vtkObject*, unsigned long, void*, void*) () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCore-6.2.so.6.2
+#10 0x00007ffff53be029 in vtkCallbackCommand::Execute(vtkObject*, unsigned long, void*) () from /usr/lib/x86_64-linux-gnu/libvtkCommonCore-6.2.so.6.2
+#11 0x00007ffff54a2b99 in ?? () from /usr/lib/x86_64-linux-gnu/libvtkCommonCore-6.2.so.6.2
+#12 0x00007fffeb81de39 in ?? () from /usr/lib/x86_64-linux-gnu/libvtkRenderingCorePython27D-6.2.so.6.2
+#13 0x00000000004bc3fa in call_function (oparg=<optimized out>, pp_stack=0x7fffffffba70) at ../Python/ceval.c:4350
+#14 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#15 0x00000000004c136f in fast_function (nk=<optimized out>, na=<optimized out>, n=1, pp_stack=0x7fffffffbb90, func=<function at remote 0x7fff7c15b230>) at ../Python/ceval.c:4435
+#16 call_function (oparg=<optimized out>, pp_stack=0x7fffffffbb90) at ../Python/ceval.c:4370
+#17 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#18 0x00000000004c136f in fast_function (nk=<optimized out>, na=<optimized out>, n=3, pp_stack=0x7fffffffbcb0, func=<function at remote 0x7fff7c0a3cf8>) at ../Python/ceval.c:4435
+#19 call_function (oparg=<optimized out>, pp_stack=0x7fffffffbcb0) at ../Python/ceval.c:4370
+#20 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#21 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#22 0x00000000004c16e7 in fast_function (nk=<optimized out>, na=<optimized out>, n=<optimized out>, pp_stack=0x7fffffffbeb0, func=<function at remote 0x7fff7c0a3c80>) at ../Python/ceval.c:4445
+#23 call_function (oparg=<optimized out>, pp_stack=0x7fffffffbeb0) at ../Python/ceval.c:4370
+#24 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#25 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#26 0x00000000004c1e6f in fast_function (nk=<optimized out>, na=<optimized out>, n=1, pp_stack=0x7fffffffc0b0, func=<function at remote 0x7fff6b095a28>) at ../Python/ceval.c:4445
+#27 call_function (oparg=<optimized out>, pp_stack=0x7fffffffc0b0) at ../Python/ceval.c:4370
+#28 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#29 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#30 0x00000000004c1e6f in fast_function (nk=<optimized out>, na=<optimized out>, n=1, pp_stack=0x7fffffffc2b0, func=<function at remote 0x7fff6b095c08>) at ../Python/ceval.c:4445
+#31 call_function (oparg=<optimized out>, pp_stack=0x7fffffffc2b0) at ../Python/ceval.c:4370
+#32 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#33 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#34 0x00000000004c1e6f in fast_function (nk=<optimized out>, na=<optimized out>, n=2, pp_stack=0x7fffffffc4b0, func=<function at remote 0x7fff6b094410>) at ../Python/ceval.c:4445
+#35 call_function (oparg=<optimized out>, pp_stack=0x7fffffffc4b0) at ../Python/ceval.c:4370
+#36 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#37 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#38 0x00000000004c1e6f in fast_function (nk=<optimized out>, na=<optimized out>, n=1, pp_stack=0x7fffffffc6b0, func=<function at remote 0x7fff6b094938>) at ../Python/ceval.c:4445
+#39 call_function (oparg=<optimized out>, pp_stack=0x7fffffffc6b0) at ../Python/ceval.c:4370
+#40 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#41 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#42 0x00000000004c1e6f in fast_function (nk=<optimized out>, na=<optimized out>, n=1, pp_stack=0x7fffffffc8b0, func=<function at remote 0x7fff6b0951b8>) at ../Python/ceval.c:4445
+#43 call_function (oparg=<optimized out>, pp_stack=0x7fffffffc8b0) at ../Python/ceval.c:4370
+#44 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#45 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#46 0x00000000004d54b9 in function_call.lto_priv () at ../Objects/funcobject.c:523
+#47 0x00000000004eebee in PyObject_Call (kw=0x0, 
+    arg=(<SimpleTabView(_SimpleTabView__parent=<UserInterface(stdout=<Redirector(buffer='', stdErrConsole=None, stderr=False) at remote 0x7fff69da3478>, zitems=[<float at remote 0x11e4cb8>, <float at remote 0x11e4ca0>, <float at remote 0x11e4c88>, 1, <float at remote 0x11e4c70>, <float at remote 0x11e4c58>, <float at remote 0x11e4c40>, <float at remote 0x11e4c28>, <float at remote 0x11e4c10>, <float at remote 0x11e4bf8>, <float at remote 0x131f7c8>], actions=[<QAction at remote 0x7fff69da35a8>, <QAction at remote 0x7fff69da3640>, <QAction at remote 0x7fff69da36d8>, <QAction at remote 0x7fff69da3770>, <QAction at remote 0x7fff69da3808>, <QAction at remote 0x7fff69da38a0>, <QAction at remote 0x7fff69da3938>], toolbarFileAct=<...>, _UserInterface__statusBar=<QStatusBar at remote 0x7fff69e64050>, toolbarSimAct=<...>, origStdout=<file at remote 0x7ffff7fa0150>, dockwindows={}, pluginsAct=<...>, consoleAct=<...>, consoleDock=<DockWidget(toggleFcn=<instancemethod at remote 0x7fff7c1280f0>) at remote 0x7fff69e64938>, lattice...(truncated), func=<function at remote 0x7fff6b095230>) at ../Objects/abstract.c:2546
+#48 instancemethod_call.lto_priv () at ../Objects/classobject.c:2602
+#49 0x00000000004a577e in PyObject_Call () at ../Objects/abstract.c:2546
+#50 0x00000000004c5e10 in PyEval_CallObjectWithKeywords () at ../Python/ceval.c:4219
+#51 0x00007fff9e16c120 in ?? () from /usr/lib/python2.7/dist-packages/PyQt5/QtCore.x86_64-linux-gnu.so
+#52 0x00007fff9e16c598 in ?? () from /usr/lib/python2.7/dist-packages/PyQt5/QtCore.x86_64-linux-gnu.so
+#53 0x00007fff9e162d20 in ?? () from /usr/lib/python2.7/dist-packages/PyQt5/QtCore.x86_64-linux-gnu.so
+#54 0x00007fff9e163657 in ?? () from /usr/lib/python2.7/dist-packages/PyQt5/QtCore.x86_64-linux-gnu.so
+#55 0x00007fffa297ac01 in QObject::event(QEvent*) () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#56 0x00007fffa323e05c in QApplicationPrivate::notify_helper(QObject*, QEvent*) () from /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5
+#57 0x00007fffa3243516 in QApplication::notify(QObject*, QEvent*) () from /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5
+#58 0x00007fff9d1bcabe in ?? () from /usr/lib/python2.7/dist-packages/PyQt5/QtWidgets.x86_64-linux-gnu.so
+#59 0x00007fffa294b38b in QCoreApplication::notifyInternal(QObject*, QEvent*) () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#60 0x00007fffa294d786 in QCoreApplicationPrivate::sendPostedEvents(QObject*, int, QThreadData*) () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#61 0x00007fffa29a13c3 in ?? () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#62 0x00007fffa21ab197 in g_main_context_dispatch () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#63 0x00007fffa21ab3f0 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#64 0x00007fffa21ab49c in g_main_context_iteration () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#65 0x00007fffa29a17cf in QEventDispatcherGlib::processEvents(QFlags<QEventLoop::ProcessEventsFlag>) () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#66 0x00007fffa2948b4a in QEventLoop::exec(QFlags<QEventLoop::ProcessEventsFlag>) () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#67 0x00007fffa2950bec in QCoreApplication::exec() () from /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+#68 0x00007fff9d17fd1b in ?? () from /usr/lib/python2.7/dist-packages/PyQt5/QtWidgets.x86_64-linux-gnu.so
+#69 0x00000000004bc3fa in call_function (oparg=<optimized out>, pp_stack=0x7fffffffd4f0) at ../Python/ceval.c:4350
+#70 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#71 0x00000000004c136f in fast_function (nk=<optimized out>, na=<optimized out>, n=1, pp_stack=0x7fffffffd610, func=<function at remote 0x7fff9cfccc08>) at ../Python/ceval.c:4435
+#72 call_function (oparg=<optimized out>, pp_stack=0x7fffffffd610) at ../Python/ceval.c:4370
+#73 PyEval_EvalFrameEx () at ../Python/ceval.c:2987
+#74 0x00000000004b9ab6 in PyEval_EvalCodeEx () at ../Python/ceval.c:3582
+#75 0x00000000004eb30f in PyEval_EvalCode (
+    locals={'QAbstractButton': <PyQt5.QtCore.pyqtWrapperType at remote 0x1329410>, 'QTableWidget': <PyQt5.QtCore.pyqtWrapperType at remote 0x1419c20>, 'QSizePolicy': <PyQt5.QtCore.pyqtWrapperType at remote 0x13ee990>, 'QMatrix3x4': <PyQt5.QtCore.pyqtWrapperType at remote 0x1347e60>, 'QMatrix3x3': <PyQt5.QtCore.pyqtWrapperType at remote 0x1347770>, 'QMatrix3x2': <PyQt5.QtCore.pyqtWrapperType at remote 0x1347080>, 'QGraphicsColorizeEffect': <PyQt5.QtCore.pyqtWrapperType at remote 0x13c7e40>, 'qRound64': <built-in function qRound64>, 'QSizeGrip': <PyQt5.QtCore.pyqtWrapperType at remote 0x13ee5b0>, 'QStyleOptionComboBox': <PyQt5.QtCore.pyqtWrapperType at remote 0x13fd190>, 'QTouchDevice': <PyQt5.QtCore.pyqtWrapperType at remote 0x138e9d0>, 'QStringListModel': <PyQt5.QtCore.pyqtWrapperType at remote 0x12eb670>, 'QAbstractSpinBox': <PyQt5.QtCore.pyqtWrapperType at remote 0x13aab60>, 'QTreeView': <PyQt5.QtCore.pyqtWrapperType at remote 0x141eda0>, 'QPoint': <PyQt5.QtCore.pyqtWrapperType at remote 0x12d5c80>, 'QFontComboBox': <...(truncated), 
+    globals={'QAbstractButton': <PyQt5.QtCore.pyqtWrapperType at remote 0x1329410>, 'QTableWidget': <PyQt5.QtCore.pyqtWrapperType at remote 0x1419c20>, 'QSizePolicy': <PyQt5.QtCore.pyqtWrapperType at remote 0x13ee990>, 'QMatrix3x4': <PyQt5.QtCore.pyqtWrapperType at remote 0x1347e60>, 'QMatrix3x3': <PyQt5.QtCore.pyqtWrapperType at remote 0x1347770>, 'QMatrix3x2': <PyQt5.QtCore.pyqtWrapperType at remote 0x1347080>, 'QGraphicsColorizeEffect': <PyQt5.QtCore.pyqtWrapperType at remote 0x13c7e40>, 'qRound64': <built-in function qRound64>, 'QSizeGrip': <PyQt5.QtCore.pyqtWrapperType at remote 0x13ee5b0>, 'QStyleOptionComboBox': <PyQt5.QtCore.pyqtWrapperType at remote 0x13fd190>, 'QTouchDevice': <PyQt5.QtCore.pyqtWrapperType at remote 0x138e9d0>, 'QStringListModel': <PyQt5.QtCore.pyqtWrapperType at remote 0x12eb670>, 'QAbstractSpinBox': <PyQt5.QtCore.pyqtWrapperType at remote 0x13aab60>, 'QTreeView': <PyQt5.QtCore.pyqtWrapperType at remote 0x141eda0>, 'QPoint': <PyQt5.QtCore.pyqtWrapperType at remote 0x12d5c80>, 'QFontComboBox': <...(truncated), co=0x7ffff7e978b0) at ../Python/ceval.c:669
+#76 run_mod.lto_priv () at ../Python/pythonrun.c:1376
+#77 0x00000000004e5422 in PyRun_FileExFlags () at ../Python/pythonrun.c:1362
+#78 0x00000000004e3cd6 in PyRun_SimpleFileExFlags () at ../Python/pythonrun.c:948
+#79 0x0000000000493ae2 in Py_Main () at ../Modules/main.c:640
+#80 0x00007ffff7810830 in __libc_start_main (main=0x4934c0 <main>, argc=3, argv=0x7fffffffda58, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7fffffffda48)
+    at ../csu/libc-start.c:291
+#81 0x00000000004933e9 in _start ()
+#48 instancemethod_call.lto_priv () at ../Objects/classobject.c:2602
+2602	../Objects/classobject.c: No such file or directory.
+quit
