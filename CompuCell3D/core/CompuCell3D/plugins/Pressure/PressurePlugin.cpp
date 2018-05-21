@@ -217,7 +217,7 @@ double PressurePlugin::changeEnergyGlobal(const Point3D &pt, const CellG *newCel
 		}
 		return energy;
 	}else{
-/* DONT FORGET TO UNCOMENT THIS!!!!!
+
 		if (newCell){
 			energy+=customExpressionFunction(lambdaPressure,Pressure,newCell->volume,newCell->volume+1);
 		}
@@ -227,8 +227,8 @@ double PressurePlugin::changeEnergyGlobal(const Point3D &pt, const CellG *newCel
 
 		}		
 		return energy;
-*/
-		return 0; //AND TO DELETE THIS!
+
+
 	}
 
 
@@ -258,7 +258,7 @@ double PressurePlugin::changeEnergyByCellType(const Point3D &pt,const CellG *new
 
 
 	}else{
-/*DONT FORGET TO UNCOMENT THIS!!!!!
+
 		if (newCell){
 			energy+=customExpressionFunction(pressureEnergyParamVector[newCell->type].lambdaPressure,fabs(pressureEnergyParamVector[newCell->type].Pressure),newCell->volume,newCell->volume+1);
 		}
@@ -268,8 +268,7 @@ double PressurePlugin::changeEnergyByCellType(const Point3D &pt,const CellG *new
 
 		}		
 		return energy;
-*/
-		return 0;//AND TO DELETE THIS!
+
 	}
 
 
@@ -303,7 +302,7 @@ double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCe
 
 
 	}else{
-/*DONT FORGET TO UNCOMENT THIS!!!!!
+
 		if (newCell){
 			energy+=customExpressionFunction(newCell->lambdaPressure,newCell->Pressure,newCell->volume,newCell->volume+1);
 		}
@@ -313,8 +312,7 @@ double PressurePlugin::changeEnergyByCellId(const Point3D &pt,const CellG *newCe
 
 		}		
 		return energy;
-*/
-		return 0;//AND TO DELETE THIS!
+
 	}
 
 
