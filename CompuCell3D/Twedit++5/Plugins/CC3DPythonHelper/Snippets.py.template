@@ -364,6 +364,10 @@ targetSurface = cell.targetSurface
 # READ/WRITE  ACCESS        
 lambdaSurface = cell.lambdaSurface
 
+----------  # @Submenu@ Pressure
+# READ/WRITE  ACCESS        
+pressure = cell.Pressure
+
 ----------  # @Submenu@ Id
 # READ ONLY ACCESS        
 id = cell.id

@@ -1,0 +1,45 @@
+<CompuCell3D Revision="20171208" Version="3.7.7">
+   
+   <Potts>
+      
+      <!-- Basic properties of CPM (GGH) algorithm -->
+      <Dimensions x="100" y="1000" z="1"/>
+      <Steps>100000</Steps>
+      <Temperature>10.0</Temperature>
+      <NeighborOrder>1</NeighborOrder>
+   </Potts>
+   
+   <Plugin Name="CellType">
+      
+      <!-- Listing all cell types in the simulation -->
+      <CellType TypeId="0" TypeName="Medium"/>
+      <CellType TypeId="1" TypeName="highPressure"/>
+      <CellType TypeId="2" TypeName="lowPressure"/>
+   </Plugin>
+   
+   <Plugin Name="Pressure"/>
+   
+   
+<Steppable Type="UniformInitializer">
+   
+   <!-- Initial layout of cells in the form of rectangular slab -->
+   <Region>
+      <BoxMin x="0" y="0" z="0"/>
+      <BoxMax x="100" y="500" z="1"/>
+      <Gap>0</Gap>
+      <Width>500</Width>
+      <Types>highPressure</Types>
+   </Region>
+   
+   <Region>
+      <BoxMin x="0" y="501" z="0"/>
+      <BoxMax x="100" y="1000" z="1"/>
+      <Gap>0</Gap>
+      <Width>500</Width>
+      <Types>lowPressure</Types>
+   </Region>
+</Steppable>
+
+
+
+</CompuCell3D>
