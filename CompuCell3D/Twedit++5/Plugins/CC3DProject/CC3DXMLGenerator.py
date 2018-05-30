@@ -309,7 +309,20 @@ class CC3DXMLGenerator:
                 continue
             dict = {"CellType": self.idToTypeTupleDict[id1][0], "TargetSurface": 20, "LambdaSurface": 0.5}
             sfElement.ElementCC3D("SurfaceEnergyParameters", dict)
+    def generatePressureFlexPlugin(self):
 
+        self.cc3d.addComment("newline")
+        self.cc3d.addComment("Constraint on cell pressure. Each cell type has different constraint.")
+        self.cc3d.addComment(
+            "For more flexible specification of the constraint (done in Python) please use PressureLocalFlex plugin")
+
+        vfElement = self.cc3d.ElementCC3D("Plugin", {"Name": "Pressure"})
+        maxId = max(self.idToTypeTupleDict.keys())
+        for id1 in range(0, maxId + 1):
+            if self.idToTypeTupleDict[id1][0] == "Medium":
+                continue
+            dict = {"CellType": self.idToTypeTupleDict[id1][0], "Pressure": 25}
+            vfElement.ElementCC3D("PressureEnergyParameters", dict)
     def generateVolumeLocalFlexPlugin(self):
         self.cc3d.addComment("newline")
         self.cc3d.addComment(
@@ -323,7 +336,12 @@ class CC3DXMLGenerator:
             "Constraint on cell surface. Each cell has different constraint - constraints have to be initialized and managed in Python")
 
         sfElement = self.cc3d.ElementCC3D("Plugin", {"Name": "Surface"})
+    def generatePressureLocalFlexPlugin(self):
+        self.cc3d.addComment("newline")
+        self.cc3d.addComment(
+            "Constraint on cell pressure. Each cell has different constraint - constraints have to be initialized and managed in Python")
 
+        vfElement = self.cc3d.ElementCC3D("Plugin", {"Name": "Pressure"})
     def generateExternalPotentialPlugin(self):
 
         self.cc3d.addComment("newline")

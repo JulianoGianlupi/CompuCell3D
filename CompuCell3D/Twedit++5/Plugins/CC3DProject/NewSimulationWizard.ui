@@ -1201,7 +1201,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QCheckBox" name="pressureFlexCHB">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="cursor">
           <cursorShape>ArrowCursor</cursorShape>
@@ -1222,7 +1222,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QCheckBox" name="pressureLocalFlexCHB">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="toolTip">
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -2086,12 +2086,12 @@ p, li { white-space: pre-wrap; }
    <slot>setShown(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>201</x>
-     <y>224</y>
+     <x>725</x>
+     <y>464</y>
     </hint>
     <hint type="destinationlabel">
-     <x>85</x>
-     <y>250</y>
+     <x>124</x>
+     <y>493</y>
     </hint>
    </hints>
   </connection>
@@ -2102,12 +2102,12 @@ p, li { white-space: pre-wrap; }
    <slot>setShown(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>261</x>
-     <y>227</y>
+     <x>759</x>
+     <y>464</y>
     </hint>
     <hint type="destinationlabel">
-     <x>202</x>
-     <y>247</y>
+     <x>483</x>
+     <y>491</y>
     </hint>
    </hints>
   </connection>

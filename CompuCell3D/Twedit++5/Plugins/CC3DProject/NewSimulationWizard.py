@@ -126,16 +126,19 @@ class NewSimulationWizard(QWizard, ui_newsimulationwizard.Ui_NewSimulationWizard
         fileName = os.path.abspath(fileName)  # normalizing path
         self.piffLE.setText(fileName)
 
-    def hideConstraintFlexOption(self):
+    def hideConstraintFlexOption(self): # if user selects local flex unchecks and hides normal flex
         self.volumeFlexCHB.setChecked(False)
         self.volumeFlexCHB.setHidden(True)
         self.surfaceFlexCHB.setChecked(False)
         self.surfaceFlexCHB.setHidden(True)
+        self.pressureFlexCHB.setChecked(False)
+        self.pressureFlexCHB.setHidden(True)
 
-    def showConstraintFlexOption(self):
+    def showConstraintFlexOption(self): # if none of the options is checked show the non flex plugins
         if not self.growthCHB.isChecked() and not self.mitosisCHB.isChecked() and not self.deathCHB.isChecked():
             self.volumeFlexCHB.setHidden(False)
             self.surfaceFlexCHB.setHidden(False)
+            self.pressureFlexCHB.setHidden(False)
 
     @pyqtSlot(bool)  # signature of the signal emited by the button
     def on_extPotCHB_toggled(self, _flag):
@@ -166,7 +169,18 @@ class NewSimulationWizard(QWizard, ui_newsimulationwizard.Ui_NewSimulationWizard
     def on_surfaceLocalFlexCHB_toggled(self, _flag):
         if _flag:
             self.surfaceFlexCHB.setChecked(not _flag)
+#
+    @pyqtSlot(bool)  # signature of the signal emited by the button
+    def on_pressureFlexCHB_toggled(self, _flag):
+        if _flag:
+            self.pressureLocalFlexCHB.setChecked(not _flag)
 
+    @pyqtSlot(bool)  # signature of the signal emited by the button
+    def on_pressureLocalFlexCHB_toggled(self, _flag):
+        if _flag:
+            self.pressureFlexCHB.setChecked(not _flag)
+
+#
     @pyqtSlot(bool)  # signature of the signal emited by the button
     def on_connectGlobalCHB_toggled(self, _flag):
         if _flag:
@@ -1126,7 +1140,7 @@ class NewSimulationWizard(QWizard, ui_newsimulationwizard.Ui_NewSimulationWizard
         # constructing Project XMl Element        
 
         from XMLUtils import ElementCC3D
-        simulationElement = ElementCC3D("Simulation", {"version": "3.6.2"})
+        simulationElement = ElementCC3D("Simulation", {"version": "3.6.2b"})
 
         from CC3DMLGenerator.CC3DMLGeneratorBase import CC3DMLGeneratorBase
         xmlGenerator = CC3DMLGeneratorBase(self.simulationFilesDir, name)
