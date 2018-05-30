@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>681</width>
-    <height>569</height>
+    <width>781</width>
+    <height>663</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -734,17 +734,6 @@ p, li { white-space: pre-wrap; }
   </widget>
   <widget class="QWizardPage" name="wizardPage">
    <layout class="QGridLayout" name="gridLayout_8">
-    <item row="0" column="0" colspan="2">
-     <widget class="QLabel" name="label_6">
-      <property name="text">
-       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#0000ff;&quot;&gt;Cell Properties and Behaviors&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="0" rowspan="2">
      <widget class="QGroupBox" name="groupBox_9">
       <property name="title">
@@ -1003,6 +992,113 @@ p, li { white-space: pre-wrap; }
       </layout>
      </widget>
     </item>
+    <item row="1" column="2">
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="title">
+       <string>Cellular Property Trackers</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QCheckBox" name="comCHB">
+         <property name="toolTip">
+          <string>Module tracking center of mass of each cell in the smiulation</string>
+         </property>
+         <property name="text">
+          <string>Center Of Mass</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="neighborCHB">
+         <property name="toolTip">
+          <string>Module tracking neighbors of each cell</string>
+         </property>
+         <property name="text">
+          <string>Cell Neighbors</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="momentOfInertiaCHB">
+         <property name="toolTip">
+          <string>Module tracking tensor of inertia of each cell</string>
+         </property>
+         <property name="text">
+          <string>Moment Of Inertia</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="pixelTrackerCHB">
+         <property name="toolTip">
+          <string>Module tracking and storing pixels of each cell</string>
+         </property>
+         <property name="text">
+          <string>Cell Pixel Tracker</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="boundaryPixelTrackerCHB">
+         <property name="toolTip">
+          <string>Module tracking and storing those pixels of a cell which are at the cell boundary</string>
+         </property>
+         <property name="text">
+          <string>Cell Boundary Pixel Tracker</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QGroupBox" name="groupBox_10">
+      <property name="title">
+       <string>Aux. Modules</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_12">
+       <item>
+        <widget class="QCheckBox" name="boxWatcherCHB">
+         <property name="toolTip">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Module computing minimal box enclosing all cells in the simulation.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Can be used to speed up some simulations&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>BoxWatcher</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="pifDumperCHB">
+         <property name="toolTip">
+          <string>Module which outputs periodically cell lattice in thee PIFF format</string>
+         </property>
+         <property name="text">
+          <string>PIFDumper</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#0000ff;&quot;&gt;Cell Properties and Behaviors&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
     <item row="1" column="1" rowspan="2">
      <widget class="QGroupBox" name="groupBox_2">
       <property name="title">
@@ -1088,6 +1184,56 @@ p, li { white-space: pre-wrap; }
          </property>
          <property name="text">
           <string>SurfaceLocalFlex</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_46">
+         <property name="text">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Pressure&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="pressureFlexCHB">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="cursor">
+          <cursorShape>ArrowCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Volume constraint energy term. E= - p * V&lt;span style=&quot; vertical-align:super;&quot;&gt; &lt;/span&gt;. &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;p is &lt;span style=&quot; vertical-align:super;&quot;&gt; &lt;/span&gt;specified for each cell type separately&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>PressureFlex</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="pressureLocalFlexCHB">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Volume constraint energy term. E= - p * V.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; p is&lt;span style=&quot; vertical-align:super;&quot;&gt; &lt;/span&gt;specified for each cell separately. p is specified in Python.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>PressureLocalFlex</string>
          </property>
         </widget>
        </item>
@@ -1235,102 +1381,26 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
       </layout>
-     </widget>
-    </item>
-    <item row="1" column="2">
-     <widget class="QGroupBox" name="groupBox_4">
-      <property name="title">
-       <string>Cellular Property Trackers</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
-        <widget class="QCheckBox" name="comCHB">
-         <property name="toolTip">
-          <string>Module tracking center of mass of each cell in the smiulation</string>
-         </property>
-         <property name="text">
-          <string>Center Of Mass</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="neighborCHB">
-         <property name="toolTip">
-          <string>Module tracking neighbors of each cell</string>
-         </property>
-         <property name="text">
-          <string>Cell Neighbors</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="momentOfInertiaCHB">
-         <property name="toolTip">
-          <string>Module tracking tensor of inertia of each cell</string>
-         </property>
-         <property name="text">
-          <string>Moment Of Inertia</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="pixelTrackerCHB">
-         <property name="toolTip">
-          <string>Module tracking and storing pixels of each cell</string>
-         </property>
-         <property name="text">
-          <string>Cell Pixel Tracker</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="boundaryPixelTrackerCHB">
-         <property name="toolTip">
-          <string>Module tracking and storing those pixels of a cell which are at the cell boundary</string>
-         </property>
-         <property name="text">
-          <string>Cell Boundary Pixel Tracker</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="2">
-     <widget class="QGroupBox" name="groupBox_10">
-      <property name="title">
-       <string>Aux. Modules</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_12">
-       <item>
-        <widget class="QCheckBox" name="boxWatcherCHB">
-         <property name="toolTip">
-          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Module computing minimal box enclosing all cells in the simulation.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Can be used to speed up some simulations&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="text">
-          <string>BoxWatcher</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="pifDumperCHB">
-         <property name="toolTip">
-          <string>Module which outputs periodically cell lattice in thee PIFF format</string>
-         </property>
-         <property name="text">
-          <string>PIFDumper</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <zorder>label_40</zorder>
+      <zorder>volumeFlexCHB</zorder>
+      <zorder>volumeLocalFlexCHB</zorder>
+      <zorder>label_41</zorder>
+      <zorder>surfaceFlexCHB</zorder>
+      <zorder>surfaceLocalFlexCHB</zorder>
+      <zorder>label_42</zorder>
+      <zorder>extPotCHB</zorder>
+      <zorder>extPotLocalFlexCHB</zorder>
+      <zorder>label_43</zorder>
+      <zorder>connectGlobalCHB</zorder>
+      <zorder>connectGlobalByIdCHB</zorder>
+      <zorder>connect2DCHB</zorder>
+      <zorder>label_45</zorder>
+      <zorder>lengthConstraintCHB</zorder>
+      <zorder>lengthConstraintLocalFlexCHB</zorder>
+      <zorder>pressureFlexCHB</zorder>
+      <zorder>pressureLocalFlexCHB</zorder>
+      <zorder>label_46</zorder>
+      <zorder>label_6</zorder>
      </widget>
     </item>
    </layout>
