@@ -309,8 +309,8 @@ class CC3DXMLGenerator:
                 continue
             dict = {"CellType": self.idToTypeTupleDict[id1][0], "TargetSurface": 20, "LambdaSurface": 0.5}
             sfElement.ElementCC3D("SurfaceEnergyParameters", dict)
+    
     def generatePressureFlexPlugin(self):
-
         self.cc3d.addComment("newline")
         self.cc3d.addComment("Constraint on cell pressure. Each cell type has different constraint.")
         self.cc3d.addComment(
@@ -323,6 +323,7 @@ class CC3DXMLGenerator:
                 continue
             dict = {"CellType": self.idToTypeTupleDict[id1][0], "Pressure": 25}
             vfElement.ElementCC3D("PressureEnergyParameters", dict)
+            
     def generateVolumeLocalFlexPlugin(self):
         self.cc3d.addComment("newline")
         self.cc3d.addComment(
