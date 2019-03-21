@@ -23,3 +23,12 @@ CompuCell3D/Twedit++5/EditorWindow_old.py
 *.sqlite
 *.xlsx
 
+CompuCell3D/core/Demos/z_test_output/SteppableDemos/ReactionDiffusionSolverFE_OpenCL_Implicit/SimpleDiffusion/SimpleDiffusion.cc3d/status.output
+CompuCell3D/core/Demos/z_test_output/SteppableDemos/ReactionDiffusionSolverFE_OpenCL_Implicit/ReactionDiffusion_OpenCL_Implicit_3D/ReactionDiffusion_OpenCL_Implicit_3D.cc3d/status.output
+CompuCell3D/core/Demos/z_test_output/optimization/optimization_demo/optimization_demo.cc3d/status.output
+CompuCell3D/core/Demos/z_test_output/Models/FitzHughNagumo_OpenCL/FitzHughNagumo_OpenCL.cc3d/status.output
+CompuCell3D/core/Demos/z_test_output/experimental/GraphVTKVis/GraphVTKVis.cc3d/status.output
+CompuCell3D/core/Demos/z_test_output/experimental/FiPyConcentrationTest/FiPyConcentrationTest.cc3d/status.output
+CompuCell3D/core/Demos/z_test_output/cc3d_simulation_tests.txt
+CompuCell3D/core/Demos/z_test_output/cc3d_simulation_test_plan.txt
+CompuCell3D/core/Demos/CompuCell3D_test_output.zip
