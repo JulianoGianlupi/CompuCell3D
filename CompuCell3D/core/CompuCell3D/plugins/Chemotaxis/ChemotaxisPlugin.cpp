@@ -391,7 +391,7 @@ float ChemotaxisPlugin::saturationLinearChemotaxisFormula(float _flipNeighborCon
 float ChemotaxisPlugin::saturationDifferenceChemotaxisFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
 {
 	return _chemotaxisData.lambda*(
-		( _flipNeighborConc - _conc )/( _chemotaxisData.saturationCoef + _flipNeighborConc + _conc )
+		( _flipNeighborConc - _conc )/( _chemotaxisData.saturationCoef + _flipNeighborConc - _conc )
 		);
 	)
 	
