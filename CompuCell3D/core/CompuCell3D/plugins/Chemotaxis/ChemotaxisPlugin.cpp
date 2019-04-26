@@ -32,6 +32,8 @@ using namespace std;
 #include "ChemotaxisData.h"
 #include "ChemotaxisPlugin.h"
 
+#include <math.h>
+
 
 ChemotaxisPlugin::ChemotaxisPlugin():algorithmPtr(&ChemotaxisPlugin::merksChemotaxis),xmlData(0),chemotaxisAlgorithm("merks"),automaton(0) {
 
@@ -39,6 +41,14 @@ ChemotaxisPlugin::ChemotaxisPlugin():algorithmPtr(&ChemotaxisPlugin::merksChemot
 	chemotaxisFormulaDict["SaturationChemotaxisFormula"]=&ChemotaxisPlugin::saturationChemotaxisFormula;
 	chemotaxisFormulaDict["SaturationLinearChemotaxisFormula"]=&ChemotaxisPlugin::saturationLinearChemotaxisFormula;
 	chemotaxisFormulaDict["SimpleChemotaxisFormula"]=&ChemotaxisPlugin::simpleChemotaxisFormula;
+    
+    //jfg, adding the new formulas here
+    chemotaxisFormulaDict["SaturationDifferenceChemotaxisFormula"]=&ChemotaxisPlugin::saturationDifferenceChemotaxisFormula;
+    chemotaxisFormulaDict["PowerChemotaxisFormula"]=&ChemotaxisPlugin::powerChemotaxisFormula;
+    chemotaxisFormulaDict["Log10DivisionFormula"]=&ChemotaxisPlugin::log10DivisionFormula;
+    chemotaxisFormulaDict["LogNatDivisionFormula"]=&ChemotaxisPlugin::logNatDivisionFormula;
+    chemotaxisFormulaDict["Log10DifferenceFormula"]=&ChemotaxisPlugin::log10DifferenceFormula;
+    chemotaxisFormulaDict["LogNatDifferenceFormula"]=&ChemotaxisPlugin::logNatDifferenceFormula;
 	
 }
 
@@ -76,23 +86,23 @@ void ChemotaxisPlugin::extraInit(Simulator *simulator) {
 
 void ChemotaxisPlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 
-	if(potts->getDisplayUnitsFlag()){
-		Unit energyUnit=potts->getEnergyUnit();
+	//if(potts->getDisplayUnitsFlag()){
+	//	Unit energyUnit=potts->getEnergyUnit();
 
 
 
 
-		CC3DXMLElement * unitsElem=_xmlData->getFirstElement("Units"); 
-		if (!unitsElem){ //add Units element
-			unitsElem=_xmlData->attachElement("Units");
-		}
+	//	CC3DXMLElement * unitsElem=_xmlData->getFirstElement("Units"); 
+	//	if (!unitsElem){ //add Units element
+	//		unitsElem=_xmlData->attachElement("Units");
+	//	}
 
-		if(unitsElem->getFirstElement("LambdaUnit")){
-			unitsElem->getFirstElement("LambdaUnit")->updateElementValue(energyUnit.toString());
-		}else{
-			CC3DXMLElement * energyElem = unitsElem->attachElement("LambdaUnit",energyUnit.toString());
-		}
-	}	
+	//	if(unitsElem->getFirstElement("LambdaUnit")){
+	//		unitsElem->getFirstElement("LambdaUnit")->updateElementValue(energyUnit.toString());
+	//	}else{
+	//		CC3DXMLElement * energyElem = unitsElem->attachElement("LambdaUnit",energyUnit.toString());
+	//	}
+	//}	
 
 	std::vector<ChemotaxisFieldData> chemotaxisFieldDataVec; 
 
@@ -130,32 +140,90 @@ void ChemotaxisPlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 			cfd.vecChemotaxisData.push_back(ChemotaxisData());
 			ChemotaxisData & cd=cfd.vecChemotaxisData[cfd.vecChemotaxisData.size()-1];
 			cd.typeName=chemotactByTypeXMlList[j]->getAttribute("Type");
-
-			if(chemotactByTypeXMlList[j]->findAttribute("Lambda")){
-				cd.lambda=chemotactByTypeXMlList[j]->getAttributeAsDouble("Lambda");
+			
+			//jfg, now that there are a bunch of formulas it'd be good to have ifs to select them, instead of relying on 
+			// variable names that migh or might not be in the xml
+			
+			if(chemotactByTypeXMlList[j]->findAttribute("FormulaName"))
+			{
+				cd.formulaName = chemotactByTypeXMlList[j]->getAttribute("FormulaName");
+				
+				if(chemotactByTypeXMlList[j]->findAttribute("Lambda")){
+					cd.lambda=chemotactByTypeXMlList[j]->getAttributeAsDouble("Lambda");
+				}
+				
+				if(chemotactByTypeXMlList[j]->findAttribute("SaturationCoef"))
+				{
+					cd.saturationCoef=chemotactByTypeXMlList[j]->getAttributeAsDouble("SaturationCoef");
+				}
+				else if(chemotactByTypeXMlList[j]->findAttribute("SaturationLinearCoef"))
+				{
+					cd.saturationCoef=chemotactByTypeXMlList[j]->getAttributeAsDouble("SaturationLinearCoef");
+				}
+				
+				if (chemotactByTypeXMlList[j]->findAttribute("DisallowChemotaxisBetweenCompartments")) 
+				{
+					cd.allowChemotaxisBetweenCompartmentsGlobal = false;	
+				}
+				
+				if(chemotactByTypeXMlList[j]->findAttribute("ChemotactTowards")){
+					//ASSERT_OR_THROW("ChemotactTowards is deprecated now. Please replace it with ChemotactAtInterfaceWith.",chemotaxisFieldDataVec.size());
+					cd.chemotactTowardsTypesString=chemotactByTypeXMlList[j]->getAttribute("ChemotactTowards");
+				}else if (chemotactByTypeXMlList[j]->findAttribute("ChemotactAtInterfaceWith")){// both keywords are OK
+					cd.chemotactTowardsTypesString=chemotactByTypeXMlList[j]->getAttribute("ChemotactAtInterfaceWith");
+				}
+				
+				if( chemotactByTypeXMlList[j]->findAttribute("PowerCoef") )
+				{
+					cd.powerLevel = chemotactByTypeXMlList[j]->getAttributeAsDouble("PowerCoef");
+					if( cd.powerLevel == 1.0 )
+					{
+						cd.formulaName = false;//powerChemotaxisFormula
+					}
+				}
+				
 			}
+			else //jfg, end
+			{
+				if(chemotactByTypeXMlList[j]->findAttribute("Lambda")){
+					cd.lambda=chemotactByTypeXMlList[j]->getAttributeAsDouble("Lambda");
+				}
 
-			if(chemotactByTypeXMlList[j]->findAttribute("SaturationCoef")){
-				cd.saturationCoef=chemotactByTypeXMlList[j]->getAttributeAsDouble("SaturationCoef");
-				cd.formulaName="SaturationChemotaxisFormula";
-			}
+				if(chemotactByTypeXMlList[j]->findAttribute("SaturationCoef")){
+					cd.saturationCoef=chemotactByTypeXMlList[j]->getAttributeAsDouble("SaturationCoef");
+					cd.formulaName="SaturationChemotaxisFormula";
+				}
 
-			if (chemotactByTypeXMlList[j]->findAttribute("DisallowChemotaxisBetweenCompartments")) {
-				cd.allowChemotaxisBetweenCompartmentsGlobal = false;				
-			}
+				if (chemotactByTypeXMlList[j]->findAttribute("DisallowChemotaxisBetweenCompartments")) {
+					cd.allowChemotaxisBetweenCompartmentsGlobal = false;				
+				}
 
-			if(chemotactByTypeXMlList[j]->findAttribute("SaturationLinearCoef")){
-				cd.saturationCoef=chemotactByTypeXMlList[j]->getAttributeAsDouble("SaturationLinearCoef");
-				cd.formulaName="SaturationLinearChemotaxisFormula";
-			}
+				if(chemotactByTypeXMlList[j]->findAttribute("SaturationLinearCoef")){
+					cd.saturationCoef=chemotactByTypeXMlList[j]->getAttributeAsDouble("SaturationLinearCoef");
+					cd.formulaName="SaturationLinearChemotaxisFormula";
+				}
 
-			if(chemotactByTypeXMlList[j]->findAttribute("ChemotactTowards")){
-				//ASSERT_OR_THROW("ChemotactTowards is deprecated now. Please replace it with ChemotactAtInterfaceWith.",chemotaxisFieldDataVec.size());
-				cd.chemotactTowardsTypesString=chemotactByTypeXMlList[j]->getAttribute("ChemotactTowards");
-			}else if (chemotactByTypeXMlList[j]->findAttribute("ChemotactAtInterfaceWith")){// both keywords are OK
-				cd.chemotactTowardsTypesString=chemotactByTypeXMlList[j]->getAttribute("ChemotactAtInterfaceWith");
+				if(chemotactByTypeXMlList[j]->findAttribute("ChemotactTowards")){
+					//ASSERT_OR_THROW("ChemotactTowards is deprecated now. Please replace it with ChemotactAtInterfaceWith.",chemotaxisFieldDataVec.size());
+					cd.chemotactTowardsTypesString=chemotactByTypeXMlList[j]->getAttribute("ChemotactTowards");
+				}else if (chemotactByTypeXMlList[j]->findAttribute("ChemotactAtInterfaceWith")){// both keywords are OK
+					cd.chemotactTowardsTypesString=chemotactByTypeXMlList[j]->getAttribute("ChemotactAtInterfaceWith");
+				}
+				//cerr<<"cd.typeName="<<cd.typeName<<" cd.lambda="<<endl;
+				
+				
+				//jfg:
+				if( chemotactByTypeXMlList[j]->findAttribute("PowerCoef") )
+				{
+					cd.powerLevel = chemotactByTypeXMlList[j]->getAttributeAsDouble("PowerCoef");
+					if( cd.powerLevel != 1 )
+					{
+						cd.formulaName = "PowerChemotaxisFormula";//powerChemotaxisFormula
+					}
+				}
+			//jfg, end
 			}
-			//cerr<<"cd.typeName="<<cd.typeName<<" cd.lambda="<<endl;
+			
 		}
 
 	}
@@ -232,6 +300,35 @@ void ChemotaxisPlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 					vecVecChemotaxisData[i][cellTypeId].formulaPtr=&ChemotaxisPlugin::saturationLinearChemotaxisFormula;
 
 				}
+				//jfg, more formulas
+				
+				
+				else if ( vecVecChemotaxisData[i][cellTypeId].formulaName == "PowerChemotaxisFormula" )
+				{
+					vecVecChemotaxisData[i][cellTypeId].formulaPtr=&ChemotaxisPlugin::powerChemotaxisFormula;
+				} 
+				else if ( vecVecChemotaxisData[i][cellTypeId].formulaName == "SaturationDifferenceChemotaxisFormula" )
+				{
+					vecVecChemotaxisData[i][cellTypeId].formulaPtr=&ChemotaxisPlugin::saturationDifferenceChemotaxisFormula;
+				}
+				else if ( vecVecChemotaxisData[i][cellTypeId].formulaName == "Log10DivisionFormula" )
+				{
+					vecVecChemotaxisData[i][cellTypeId].formulaPtr=&ChemotaxisPlugin::log10DivisionFormula;
+				}
+				else if ( vecVecChemotaxisData[i][cellTypeId].formulaName == "LogNatDivisionFormula" )
+				{
+					vecVecChemotaxisData[i][cellTypeId].formulaPtr=&ChemotaxisPlugin::logNatDivisionFormula;
+				}
+				else if ( vecVecChemotaxisData[i][cellTypeId].formulaName == "Log10DifferenceFormula" )
+				{
+					vecVecChemotaxisData[i][cellTypeId].formulaPtr=&ChemotaxisPlugin::log10DifferenceFormula;
+				}
+				else if ( vecVecChemotaxisData[i][cellTypeId].formulaName == "LogNatDifferenceFormula" )
+				{
+					vecVecChemotaxisData[i][cellTypeId].formulaPtr=&ChemotaxisPlugin::logNatDifferenceFormula;
+				}
+				
+				// jfg, end
 				else{
 					vecVecChemotaxisData[i][cellTypeId].formulaPtr=&ChemotaxisPlugin::simpleChemotaxisFormula;
 				}
@@ -290,6 +387,66 @@ float ChemotaxisPlugin::saturationLinearChemotaxisFormula(float _flipNeighborCon
 
 }
 
+//jfg, more formulas
+float ChemotaxisPlugin::saturationDifferenceChemotaxisFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
+{
+	return _chemotaxisData.lambda*(
+		( _flipNeighborConc - _conc )/( _chemotaxisData.saturationCoef + _flipNeighborConc + _conc )
+		);
+	)
+	
+}
+
+float ChemotaxisPlugin::powerChemotaxisFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
+{
+	float diff = _flipNeighborConc-_conc
+	if (_chemotaxisData.powerLevel < 0 && diff == 0)
+	{
+		return 9E99 * _chemotaxisData.lambda;
+	}
+	return _chemotaxisData.lambda*pow(
+		diff, _chemotaxisData.powerLevel
+	);
+}
+
+float ChemotaxisPlugin::log10DivisionFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
+{
+	return _chemotaxisData.lambda * log10(
+		( 1 + _flipNeighborConc )/( 1 + _conc )
+	) ;
+}
+
+float ChemotaxisPlugin::logNatDivisionFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
+{
+	return _chemotaxisData.lambda * log(
+		( 1 + _flipNeighborConc )/( 1 + _conc )
+	) ;
+}
+
+float ChemotaxisPlugin::log10DifferenceFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
+{
+	float diff = _flipNeighborConc - _conc
+	
+	if ( diff <= 0 )
+	{
+		return -9E99 * _chemotaxisData.lambda;
+	}
+	
+	return _chemotaxisData.lambda * log10( diff );
+}
+
+float ChemotaxisPlugin::logNatDifferenceFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
+{
+	float diff = _flipNeighborConc - _conc
+	
+	if ( diff <= 0 )
+	{
+		return -9E99 * _chemotaxisData.lambda;
+	}
+	
+	return _chemotaxisData.lambda * log( diff );
+}
+//jfg, end
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 double ChemotaxisPlugin::regularChemotaxis(const Point3D &pt, const CellG *newCell,const CellG *oldCell){
