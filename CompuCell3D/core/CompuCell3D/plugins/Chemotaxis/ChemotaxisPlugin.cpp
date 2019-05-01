@@ -178,7 +178,7 @@ void ChemotaxisPlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 					cd.powerLevel = chemotactByTypeXMlList[j]->getAttributeAsDouble("PowerCoef");
 					if( cd.powerLevel == 1.0 )
 					{
-						cd.formulaName = false;//powerChemotaxisFormula
+						cd.formulaName="none";
 					}
 				}
 				
@@ -390,16 +390,14 @@ float ChemotaxisPlugin::saturationLinearChemotaxisFormula(float _flipNeighborCon
 //jfg, more formulas
 float ChemotaxisPlugin::saturationDifferenceChemotaxisFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
 {
-	return _chemotaxisData.lambda*(
-		( _flipNeighborConc - _conc )/( _chemotaxisData.saturationCoef + _flipNeighborConc - _conc )
-		);
-	)
+	return _chemotaxisData.lambda*( _flipNeighborConc - _conc )/( _chemotaxisData.saturationCoef + _flipNeighborConc - _conc );
+	
 	
 }
 
 float ChemotaxisPlugin::powerChemotaxisFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
 {
-	float diff = _flipNeighborConc-_conc
+	float diff = _flipNeighborConc - _conc;
 	if (_chemotaxisData.powerLevel < 0 && diff == 0)
 	{
 		return 9E99 * _chemotaxisData.lambda;
@@ -425,7 +423,7 @@ float ChemotaxisPlugin::logNatDivisionFormula(float _flipNeighborConc, float _co
 
 float ChemotaxisPlugin::log10DifferenceFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
 {
-	float diff = _flipNeighborConc - _conc
+	float diff = _flipNeighborConc - _conc;
 	
 	if ( diff <= 0 )
 	{
@@ -437,7 +435,7 @@ float ChemotaxisPlugin::log10DifferenceFormula(float _flipNeighborConc, float _c
 
 float ChemotaxisPlugin::logNatDifferenceFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
 {
-	float diff = _flipNeighborConc - _conc
+	float diff = _flipNeighborConc - _conc;
 	
 	if ( diff <= 0 )
 	{
