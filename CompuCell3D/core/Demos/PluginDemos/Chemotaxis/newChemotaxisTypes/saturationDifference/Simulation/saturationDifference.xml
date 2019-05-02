@@ -3,7 +3,7 @@
    <Potts>
       
       <!-- Basic properties of CPM (GGH) algorithm -->
-      <Dimensions x="100" y="300" z="1"/>
+      <Dimensions x="300" y="100" z="1"/>
       <Steps>100000</Steps>
       <Temperature>10.0</Temperature>
       <NeighborOrder>1</NeighborOrder>
@@ -17,7 +17,7 @@
    </Plugin>
    
    <Plugin Name="Volume">
-      <VolumeEnergyParameters CellType="Cell" LambdaVolume="4.0" TargetVolume="36"/>
+      <VolumeEnergyParameters CellType="Cell" LambdaVolume="1.0" TargetVolume="36"/>
    </Plugin>
    
    <Plugin Name="CenterOfMass">
@@ -30,7 +30,7 @@
       <Energy Type1="Medium" Type2="Medium">10.0</Energy>
       <Energy Type1="Medium" Type2="Cell">10.0</Energy>
       <Energy Type1="Cell" Type2="Cell">10.0</Energy>
-      <NeighborOrder>1</NeighborOrder>
+      <NeighborOrder>3</NeighborOrder>
    </Plugin>
    
    <Plugin Name="Chemotaxis">
@@ -38,7 +38,7 @@
       <!-- You may repeat ChemicalField element for each chemical field declared in the PDE solvers -->
       <!-- Specification of chemotaxis properties of select cell types. -->
       <ChemicalField Name="attr" Source="DiffusionSolverFE">
-         <ChemotaxisByType Lambda="10.0" Type="Cell"/>
+         <ChemotaxisByType Lambda="50.0" Type="Cell"/>
       </ChemicalField>
    </Plugin>
    
@@ -51,7 +51,7 @@
             <GlobalDiffusionConstant>0.1</GlobalDiffusionConstant>
             <GlobalDecayConstant>0</GlobalDecayConstant>
             <!-- Additional options are: -->
-            <InitialConcentrationExpression>0.1*x</InitialConcentrationExpression> 
+            <InitialConcentrationExpression>0.0333*x</InitialConcentrationExpression> 
             <!-- <ConcentrationFileName>INITIAL CONCENTRATION FIELD - typically a file with path Simulation/NAME_OF_THE_FILE.txt</ConcentrationFileName> -->
             <DiffusionCoefficient CellType="Cell">0.1</DiffusionCoefficient>
             
@@ -79,7 +79,7 @@
       
       <!-- Initial layout of cells in the form of spherical (circular in 2D) blob -->
       <Region>
-         <Center x="10" y="150" z="0"/>
+         <Center x="10" y="50" z="0"/>
          <Radius>3</Radius>
          <Gap>0</Gap>
          <Width>6</Width>

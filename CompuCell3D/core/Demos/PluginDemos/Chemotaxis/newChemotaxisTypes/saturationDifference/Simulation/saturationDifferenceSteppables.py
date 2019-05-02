@@ -11,8 +11,16 @@ class saturationDifferenceSteppable(SteppableBasePy):
         pass
     def step(self,mcs):        
         #type here the code that will run every _frequency MCS
+        pass
+        
         for cell in self.cellList:
-            print "cell.id=",cell.id
+            
+            cd = self.chemotaxisPlugin.getChemotaxisData(cell, "ATTR")
+            print cd.si_fude_mano()
+        
+        
+        
+        
     def finish(self):
         # Finish Function gets called after the last MCS
         pass
