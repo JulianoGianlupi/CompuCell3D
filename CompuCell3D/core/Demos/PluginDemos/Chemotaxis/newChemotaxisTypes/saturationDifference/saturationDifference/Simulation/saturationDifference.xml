@@ -79,10 +79,10 @@
       
       <!-- Initial layout of cells in the form of spherical (circular in 2D) blob -->
       <Region>
-         <Center x="50" y="150" z="0"/>
-         <Radius>60</Radius>
+         <Center x="10" y="150" z="0"/>
+         <Radius>3</Radius>
          <Gap>0</Gap>
-         <Width>5</Width>
+         <Width>6</Width>
          <Types>Cell</Types>
       </Region>
    </Steppable>
