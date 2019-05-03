@@ -1,0 +1,5 @@
+<Simulation version="3.6.2">
+   <XMLScript Type="XMLScript">Simulation/Log10DifferenceFormula.xml</XMLScript>
+   <PythonScript Type="PythonScript">Simulation/Log10DifferenceFormula.py</PythonScript>
+   <Resource Type="Python">Simulation/Log10DifferenceFormulaSteppables.py</Resource>
+</Simulation>

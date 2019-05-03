@@ -2,7 +2,7 @@
 from PySteppables import *
 import CompuCell
 import sys
-class saturationDifferenceSteppable(SteppableBasePy):
+class Powered_DifferenceSteppable(SteppableBasePy):
 
     def __init__(self,_simulator,_frequency=1):
         SteppableBasePy.__init__(self,_simulator,_frequency)
@@ -15,11 +15,6 @@ class saturationDifferenceSteppable(SteppableBasePy):
                                                   _yScaleType='linear')
         self.pW_chemoExtr.addPlot('Over All Cell', _style='Dots', _color='red', _size=5)
         self.pW_chemoExtr.addPlot('To Center Of Mass', _style='Dots', _color='blue',_size=5)
-        
-        
-        
-        pass
-    
     def step(self,mcs):        
         #type here the code that will run every _frequency MCS
         
@@ -45,13 +40,14 @@ class saturationDifferenceSteppable(SteppableBasePy):
         self.pW_chemoExtr.addDataPoint("Over All Cell", c1-c2, energy)  
         
         
-        energy = self.calculate_chemotaxis(c1,cCOM,5)
+        energy = self.calculate_chemotaxis(c1,cCOM,2)
         self.pW_chemoExtr.addDataPoint("To Center Of Mass", c1-cCOM, energy)  
-        
-        
-        
-    def calculate_chemotaxis(self,c1,c2,s):
-        return (c1-c2)/(s+c1-c2)
+    def calculate_chemotaxis(self,c1,c2,n):
+        if n<0 and c1-c2 == 0:
+            return 9999
+        return (c1-c2)**n
+    
+    
     def finish(self):
         # Finish Function gets called after the last MCS
         pass

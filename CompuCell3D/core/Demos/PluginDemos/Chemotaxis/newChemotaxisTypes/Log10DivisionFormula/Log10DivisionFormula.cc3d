@@ -1,0 +1,5 @@
+<Simulation version="3.6.2">
+   <XMLScript Type="XMLScript">Simulation/Log10DivisionFormula.xml</XMLScript>
+   <PythonScript Type="PythonScript">Simulation/Log10DivisionFormula.py</PythonScript>
+   <Resource Type="Python">Simulation/Log10DivisionFormulaSteppables.py</Resource>
+</Simulation>

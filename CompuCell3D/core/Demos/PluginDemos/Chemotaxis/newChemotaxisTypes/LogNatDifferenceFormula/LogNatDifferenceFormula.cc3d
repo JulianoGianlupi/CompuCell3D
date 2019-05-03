@@ -1,0 +1,5 @@
+<Simulation version="3.6.2">
+   <XMLScript Type="XMLScript">Simulation/LogNatDifferenceFormula.xml</XMLScript>
+   <PythonScript Type="PythonScript">Simulation/LogNatDifferenceFormula.py</PythonScript>
+   <Resource Type="Python">Simulation/LogNatDifferenceFormulaSteppables.py</Resource>
+</Simulation>

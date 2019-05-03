@@ -1,0 +1,5 @@
+<Simulation version="3.6.2">
+   <XMLScript Type="XMLScript">Simulation/Powered_Difference.xml</XMLScript>
+   <PythonScript Type="PythonScript">Simulation/Powered_Difference.py</PythonScript>
+   <Resource Type="Python">Simulation/Powered_DifferenceSteppables.py</Resource>
+</Simulation>
