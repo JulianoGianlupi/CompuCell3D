@@ -40,7 +40,7 @@ class Log10DifferenceFormulaSteppable(SteppableBasePy):
         self.pW_chemoExtr.addDataPoint("Over All Cell", c1-c2, energy)  
         
         
-        energy = self.calculate_chemotaxis(c1,cCOM,5)
+        energy = self.calculate_chemotaxis(c1,cCOM)
         self.pW_chemoExtr.addDataPoint("To Center Of Mass", c1-cCOM, energy)  
     def calculate_chemotaxis(self,c1,c2):
         if c1-c2<=0:
