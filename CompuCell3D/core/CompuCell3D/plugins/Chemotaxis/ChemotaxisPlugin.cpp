@@ -468,17 +468,17 @@ float ChemotaxisPlugin::powerChemotaxisFormula(float _flipNeighborConc, float _c
 		<< _chemotaxisData.lambda*pow(diff, _chemotaxisData.powerLevel) << "\n";
 
 
-	test_ou*/t_file.close();
+	test_out_file.close();*/
 	return _chemotaxisData.lambda*pow(diff, _chemotaxisData.powerLevel);
 }
 
 float ChemotaxisPlugin::log10DivisionFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
 {
 	
-	std:/*:ofstream test_out_file;
+	/*std::ofstream test_out_file;
 	test_out_file.open("log10ChemotaxisOut.dat", std::ios_base::app);
 	test_out_file << _flipNeighborConc << "," << _conc << "," << _chemotaxisData.lambda * std::log10((1 + _flipNeighborConc) / (1 + _conc)) << "\n";
-	test_ou*/t_file.close();
+	test_out_file.close();*/
 	
 	
 	return _chemotaxisData.lambda * std::log10(
