@@ -164,7 +164,8 @@ void ChemotaxisPlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 				}
 				else if (cd.formulaName == "SaturationLinearChemotaxisFormula" || 
 					cd.formulaName == "SaturationChemotaxisFormula" ||
-					cd.formulaName == "SaturationDifferenceChemotaxisFormula")
+					cd.formulaName == "SaturationDifferenceChemotaxisFormula" ||
+					cd.formulaName == "SaturationDifferenceCorrected")
 				{
 					std::cout << "You've asked for a saturation formula but did not provide a saturation coeficient" << std::endl ;
 					exit(0);
@@ -320,6 +321,11 @@ void ChemotaxisPlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 				{
 					vecVecChemotaxisData[i][cellTypeId].formulaPtr=&ChemotaxisPlugin::saturationDifferenceChemotaxisFormula;
 				}
+
+				else if (vecVecChemotaxisData[i][cellTypeId].formulaName == "SaturationDifferenceCorrected")
+				{
+					vecVecChemotaxisData[i][cellTypeId].formulaPtr = &ChemotaxisPlugin::saturationDifferenceCorrected;
+				}
 				else if ( vecVecChemotaxisData[i][cellTypeId].formulaName == "Log10DivisionFormula" )
 				{
 					vecVecChemotaxisData[i][cellTypeId].formulaPtr=&ChemotaxisPlugin::log10DivisionFormula;
@@ -442,6 +448,13 @@ float ChemotaxisPlugin::saturationDifferenceChemotaxisFormula(float _flipNeighbo
 	
 }
 
+
+float ChemotaxisPlugin::saturationDifferenceCorrected(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
+{
+	return _chemotaxisData.lambda*(_flipNeighborConc - _conc) / (1 + (_flipNeighborConc - _conc)/ _chemotaxisData.saturationCoef);
+}
+
+
 float ChemotaxisPlugin::powerChemotaxisFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData)
 {
 	float diff = _flipNeighborConc - _conc;
@@ -542,6 +555,10 @@ float ChemotaxisPlugin::logNatDifferenceFormula(float _flipNeighborConc, float _
 
 	return _chemotaxisData.lambda * std::log( diff );
 }
+
+
+
+
 //jfg, end
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

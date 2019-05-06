@@ -61,6 +61,8 @@ namespace CompuCell3D {
    float saturationChemotaxisFormula(float _flipNeighborConc,float _conc,ChemotaxisData & _chemotaxisData);
    float saturationLinearChemotaxisFormula(float _flipNeighborConc,float _conc,ChemotaxisData & _chemotaxisData);
    float saturationDifferenceChemotaxisFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData);
+   float saturationDifferenceCorrected(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData);
+   
    float powerChemotaxisFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData);
    float log10DivisionFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData);
    float logNatDivisionFormula(float _flipNeighborConc, float _conc, ChemotaxisData & _chemotaxisData);
