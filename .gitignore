@@ -21,3 +21,14 @@ vtk
 *~
 CompuCell3D/Twedit++5/EditorWindow_old.py
 *.sqlite
+CompuCell3D/core/Demos/PluginDemos/Chemotaxis/newChemotaxisTypes/value_tests/saturationDifferenceChemotaxisOut.dat
+CompuCell3D/core/Demos/PluginDemos/Chemotaxis/newChemotaxisTypes/value_tests/saturation_test.png
+CompuCell3D/core/Demos/PluginDemos/Chemotaxis/newChemotaxisTypes/value_tests/powerTest.png
+CompuCell3D/core/Demos/PluginDemos/Chemotaxis/newChemotaxisTypes/value_tests/powerDifferenceChemotaxisOut.dat
+CompuCell3D/core/Demos/PluginDemos/Chemotaxis/newChemotaxisTypes/value_tests/logChemotaxisTest.png
+CompuCell3D/core/Demos/PluginDemos/Chemotaxis/newChemotaxisTypes/value_tests/log10DiffChemotaxisOut.dat
+CompuCell3D/core/Demos/PluginDemos/Chemotaxis/newChemotaxisTypes/value_tests/log10ChemotaxisOut.dat
+CompuCell3D/core/Demos/PluginDemos/Chemotaxis/newChemotaxisTypes/value_tests/lnDiffChemotaxisOut.dat
+CompuCell3D/core/Demos/PluginDemos/Chemotaxis/newChemotaxisTypes/value_tests/lnChemotaxisTest.png
+CompuCell3D/core/Demos/PluginDemos/Chemotaxis/newChemotaxisTypes/value_tests/lnChemotaxisOut.dat
+CompuCell3D/core/Demos/PluginDemos/Chemotaxis/newChemotaxisTypes/value_tests/fit_check.py
