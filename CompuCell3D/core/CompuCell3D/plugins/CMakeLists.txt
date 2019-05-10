@@ -79,6 +79,8 @@ ADD_SUBDIRECTORY(GlobalBoundaryPixelTracker)
 ADD_SUBDIRECTORY(Viscosity)
 ADD_SUBDIRECTORY(Secretion)
 
+ADD_SUBDIRECTORY(MotilityPotential)
+
 # #ADD_SUBDIRECTORY(ChickType)
 # #ADD_SUBDIRECTORY(Growth)
 # #ADD_SUBDIRECTORY(ChickGrowthType)
