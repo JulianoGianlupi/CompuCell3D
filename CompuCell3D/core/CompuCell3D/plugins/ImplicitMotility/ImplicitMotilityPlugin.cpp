@@ -4,7 +4,9 @@ using namespace CompuCell3D;
 using namespace std;
 
 #include "ImplicitMotilityPlugin.h"
-
+#define _USE_MATH_DEFINES
+#include <math.h>
+#include <BasicUtils/BasicRandomNumberGenerator.h>
 
 ImplicitMotilityPlugin::ImplicitMotilityPlugin():
 pUtils(0),
@@ -96,20 +98,93 @@ double ImplicitMotilityPlugin::changeEnergyByCellType(const Point3D &pt,const Ce
 		//note, in the update bias vec function you're gonna write (juliano) multiply
 		//the vector by lambda 
 		//kindly, juliano from the past
-		energy += distVector.X()*externalPotentialParamVector[oldCell->type].biasVec.X()
+		energy -= distVector.X()*externalPotentialParamVector[oldCell->type].biasVec.X()
 				+ distVector.Y()*externalPotentialParamVector[newCell->type].biasVec.Y()
 				+ distVector.Z()*externalPotentialParamVector[newCell->type].biasVec.Z();
 
     }
     
-    if(newCell){
-        //PUT YOUR CODE HERE
-    }else{
-        //PUT YOUR CODE HERE
+    if(newCell)
+	{
+		Coordinates3D<double> newCOMAfterFlip = precalculateCentroid(pt, newCell, 1, fieldDim, boundaryStrategy);
+
+
+		newCOMAfterFlip.XRef() = newCOMAfterFlip.X() / (float)(newCell->volume + 1);
+		newCOMAfterFlip.YRef() = newCOMAfterFlip.Y() / (float)(newCell->volume + 1);
+		newCOMAfterFlip.ZRef() = newCOMAfterFlip.Z() / (float)(newCell->volume + 1);
+
+
+		Coordinates3D<double> newCOMBeforeFlip(newCell->xCM / newCell->volume, newCell->yCM / newCell->volume, newCell->zCM / newCell->volume);
+		Coordinates3D<double> distVector = distanceVectorCoordinatesInvariant(newCOMAfterFlip, newCOMBeforeFlip, fieldDim);
+
+		energy -= distVector.X()*externalPotentialParamVector[newCell->type].biasVec.X()
+			+ distVector.Y()*externalPotentialParamVector[newCell->type].biasVec.Y()
+			+ distVector.Z()*externalPotentialParamVector[newCell->type].biasVec.Z();
     }
     
     return energy;    
 }            
+
+double ImplicitMotilityPlugin::changeEnergyByCellId(const Point3D &pt, const CellG *newCell,
+															const CellG *oldCell)
+{
+	
+	//I'm going to declare the bias vector here for now, however it updating every spin flip attempt is no bueno.
+	//It should update n times every mcs for each cell.
+	//So bias vector needs to be a cell object thing.
+	BasicRandomNumberGenerator *rand = BasicRandomNumberGenerator::getInstance();
+	//std::uniform_real_distribution<double> dist(0.0, 1.0);
+	//spherical coordinates using ISO convention (ISO 80000-2). theta is polar angle, phi is azimuth.
+	double tmp_theta = M_PI * rand->getRatio(); //random theta and phi in their respective ranges
+	double tmp_phi = 2 * M_PI * rand->getRatio();
+
+	//need to add check 2D, then set phi = pi/2
+	Coordinates3D<double> bias_vector(std::cos(tmp_theta) * std::sin(tmp_phi),
+						 std::sin(tmp_theta) * std::sin(tmp_phi),
+						  std::cos(tmp_phi));
+	
+	
+	double energy = 0.0;
+	if (oldCell) {
+		Coordinates3D<double> oldCOMAfterFlip = precalculateCentroid(pt, oldCell, -1, fieldDim, boundaryStrategy);
+
+		if (oldCell->volume>1) {
+			oldCOMAfterFlip.XRef() = oldCOMAfterFlip.X() / (float)(oldCell->volume - 1);
+			oldCOMAfterFlip.YRef() = oldCOMAfterFlip.Y() / (float)(oldCell->volume - 1);
+			oldCOMAfterFlip.ZRef() = oldCOMAfterFlip.Z() / (float)(oldCell->volume - 1);
+		}
+		else {
+
+			oldCOMAfterFlip = Coordinates3D<double>(oldCell->xCM / oldCell->volume, oldCell->zCM / oldCell->volume, oldCell->zCM / oldCell->volume);
+
+		}
+
+		Coordinates3D<double> oldCOMBeforeFlip(oldCell->xCM / oldCell->volume, oldCell->yCM / oldCell->volume, oldCell->zCM / oldCell->volume);
+		Coordinates3D<double> distVector = distanceVectorCoordinatesInvariant(oldCOMAfterFlip, oldCOMBeforeFlip, fieldDim);
+		energy -= oldCell->lambdaMotility*(distVector.X()*bias_vector.X() + distVector.Y()*bias_vector.X() + distVector.Z()*bias_vector.X());
+		//negative because it'd be confusing for users to have to define a negative lambda to go to a positive direction
+	}
+
+
+	if (newCell) {
+
+		Coordinates3D<double> newCOMAfterFlip = precalculateCentroid(pt, newCell, 1, fieldDim, boundaryStrategy);
+
+
+		newCOMAfterFlip.XRef() = newCOMAfterFlip.X() / (float)(newCell->volume + 1);
+		newCOMAfterFlip.YRef() = newCOMAfterFlip.Y() / (float)(newCell->volume + 1);
+		newCOMAfterFlip.ZRef() = newCOMAfterFlip.Z() / (float)(newCell->volume + 1);
+
+
+		Coordinates3D<double> newCOMBeforeFlip(newCell->xCM / newCell->volume, newCell->yCM / newCell->volume, newCell->zCM / newCell->volume);
+		Coordinates3D<double> distVector = distanceVectorCoordinatesInvariant(newCOMAfterFlip, newCOMBeforeFlip, fieldDim);
+
+		energy -= newCell->lambdaMotility*(distVector.X()*bias_vector.X() + distVector.Y()*bias_vector.X() + distVector.Z()*bias_vector.X());
+		//negative because it'd be confusing for users to have to define a negative lambda to go to a positive direction
+	}
+
+	return energy;
+}
 
 
 void ImplicitMotilityPlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){

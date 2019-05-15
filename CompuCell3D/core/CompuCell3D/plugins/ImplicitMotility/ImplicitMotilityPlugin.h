@@ -72,7 +72,9 @@ namespace CompuCell3D {
 
         
         //Energy function interface
-        virtual double changeEnergyByCellType(const Point3D &pt, const CellG *newCell, const CellG *oldCell);        
+        virtual double changeEnergyByCellType(const Point3D &pt, const CellG *newCell, const CellG *oldCell);
+
+		double changeEnergyByCellId(const Point3D & pt, const CellG * newCell, const CellG * oldCell);
         
                 
         
