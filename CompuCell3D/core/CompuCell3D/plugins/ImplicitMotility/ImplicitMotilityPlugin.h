@@ -29,11 +29,10 @@ namespace CompuCell3D {
 	public:
 		ImplicitMotilityParam()
 		{
-			biasVec.x = 0.0;
-			biasVec.y = 0.0;
-			biasVec.z = 0.0;
+			
+			lambdaMotility = 0.0;
 		}
-		Coordinates3D<float> biasVec;
+		
 		double lambdaMotility;
 	};
 
