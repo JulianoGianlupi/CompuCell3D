@@ -74,32 +74,34 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 		tz /= sq_sum;*/
 
 
-		//tx, ty and tz need to be gaussian distrubuted actually
-		double dist = 1.5;
-		double tx = 0;
-		double ty = 0;
-		double tz = 0;
+		//method for getting random unitary vector in sphere from Marsaglia 1972
+		//example and reason for not using a uniform distribution
+		//can be found @ mathworld.wolfram.com/SpherePointPicking.html
+		
+		double tx = 2 * rand->getRatio() - 1;
+		double ty = 2 * rand->getRatio() - 1;
+
+		double dist = std::sqrt(tx*tx + ty*ty);
 
 		while (dist > 1)
 		{
 			double tx = 2 * rand->getRatio() - 1;
 			double ty = 2 * rand->getRatio() - 1;
-			double tz = 2 * rand->getRatio() - 1;
+			
 
-			dist = std::sqrt(tx*tx + ty*ty + tz*tz);
+			dist = std::sqrt(tx*tx + ty*ty);
 
 		}
 
 		if (dist<=1)
 		{
-			tx /= dist;
-			ty /= dist;
-			tz /= dist;
+			double x = 2 * tx*std::sqrt(1 - tx*tx - ty*ty);
+			double y = 2 * ty * std::sqrt(1 - tx*tx - ty*ty);
+			double z = 1 - 2 * (tx*tx + ty*ty);
 
-
-			cell->biasVector.X = tx;
-			cell->biasVector.Y = tx;
-			cell->biasVector.Z = tx;
+			cell->biasVector.X = x;
+			cell->biasVector.Y = y;
+			cell->biasVector.Z = z;
 		}
         //cerr<<"cell.id="<<cell->id<<" vol="<<cell->volume<<endl;
     }
