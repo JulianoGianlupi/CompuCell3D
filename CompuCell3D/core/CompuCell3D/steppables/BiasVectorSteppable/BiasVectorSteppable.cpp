@@ -77,6 +77,8 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 		//method for getting random unitary vector in sphere from Marsaglia 1972
 		//example and reason for not using a uniform distribution
 		//can be found @ mathworld.wolfram.com/SpherePointPicking.html
+
+		//need to add check and method for 2D
 		
 		double tx = 2 * rand->getRatio() - 1;
 		double ty = 2 * rand->getRatio() - 1;
