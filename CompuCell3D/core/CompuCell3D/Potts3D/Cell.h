@@ -69,7 +69,10 @@ namespace CompuCell3D {
         extraAttribPtr(0),
         pyAttrib(0),
 		lambdaMotility(0.0),
-		biasVector{ 1.0, 0.0, 0.0 }
+		//biasVector{ 1.0, 0.0, 0.0 }
+		  biasVecX(1.0),
+		  biasVecY(0.0),
+		  biasVecZ(0.0)
       {}
       long volume;
       float targetVolume;
@@ -98,7 +101,8 @@ namespace CompuCell3D {
 	  bool connectivityOn;
 	  //jfg
 	  double lambdaMotility;
-	  Coordinates3D<double> biasVector;
+	  double biasVecX, biasVecY, biasVecZ;
+	  //Coordinates3D<float> biasVector;
 	  //
       BasicClassGroup *extraAttribPtr;
 

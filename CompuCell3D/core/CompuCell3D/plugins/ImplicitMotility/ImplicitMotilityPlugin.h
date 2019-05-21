@@ -61,6 +61,7 @@ namespace CompuCell3D {
 		Point3D boundaryConditionIndicator;
 
 		std::vector<ImplicitMotilityParam> externalPotentialParamVector;
+		Coordinates3D<double> biasVecTmp;
         
     public:
 

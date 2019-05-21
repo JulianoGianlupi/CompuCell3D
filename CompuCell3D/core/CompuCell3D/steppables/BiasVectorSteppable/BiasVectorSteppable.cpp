@@ -101,9 +101,13 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 			double y = 2 * ty * std::sqrt(1 - tx*tx - ty*ty);
 			double z = 1 - 2 * (tx*tx + ty*ty);
 
-			cell->biasVector.X = x;
-			cell->biasVector.Y = y;
-			cell->biasVector.Z = z;
+			//cell->biasVector.X = x;
+			
+			//cell->biasVector.Y = y;
+			//cell->biasVector.Z = z;
+			cell->biasVecX = x;
+			cell->biasVecY = y;
+			cell->biasVecZ = z;
 		}
         //cerr<<"cell.id="<<cell->id<<" vol="<<cell->volume<<endl;
     }

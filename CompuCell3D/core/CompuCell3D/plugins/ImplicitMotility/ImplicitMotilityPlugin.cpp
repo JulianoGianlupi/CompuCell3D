@@ -103,7 +103,8 @@ double ImplicitMotilityPlugin::changeEnergyByCellType(const Point3D &pt,const Ce
 		
 		
 
-		Coordinates3D<double> biasVecTmp = oldCell->biasVector;
+		//Coordinates3D<double> biasVecTmp = oldCell->biasVector;
+		biasVecTmp = Coordinates3D<double>(oldCell->biasVecX, oldCell->biasVecY, oldCell->biasVecZ);
 
 		energy -= externalPotentialParamVector[oldCell->type].lambdaMotility*
 			(distVector.X()*biasVecTmp.X() + distVector.Y()*biasVecTmp.X() + distVector.Z()*biasVecTmp.Z());
@@ -124,7 +125,8 @@ double ImplicitMotilityPlugin::changeEnergyByCellType(const Point3D &pt,const Ce
 		Coordinates3D<double> distVector = distanceVectorCoordinatesInvariant(newCOMAfterFlip, newCOMBeforeFlip, fieldDim);
 		//externalPotentialParamVector[newCell->type]
 		
-		Coordinates3D<double> biasVecTmp = newCell->biasVector;
+		//Coordinates3D<double> biasVecTmp = newCell->biasVector;
+		biasVecTmp = Coordinates3D<double>(newCell->biasVecX, newCell->biasVecY, newCell->biasVecZ);
 		
 		energy -= externalPotentialParamVector[newCell->type].lambdaMotility*
 			(distVector.X()*biasVecTmp.X() + distVector.Y()*biasVecTmp.X() + distVector.Z()*biasVecTmp.Z());
@@ -158,7 +160,8 @@ double ImplicitMotilityPlugin::changeEnergyByCellId(const Point3D &pt, const Cel
 		Coordinates3D<double> oldCOMBeforeFlip(oldCell->xCM / oldCell->volume, oldCell->yCM / oldCell->volume, oldCell->zCM / oldCell->volume);
 		Coordinates3D<double> distVector = distanceVectorCoordinatesInvariant(oldCOMAfterFlip, oldCOMBeforeFlip, fieldDim);
 		
-		Coordinates3D<double> biasVecTmp = oldCell->biasVector;
+		//Coordinates3D<double> biasVecTmp = oldCell->biasVector;
+		biasVecTmp = Coordinates3D<double>(oldCell->biasVecX, oldCell->biasVecY, oldCell->biasVecZ);
 		
 		energy -= oldCell->lambdaMotility*
 			(distVector.X()*biasVecTmp.X() + distVector.Y()*biasVecTmp.X() + distVector.Z()*biasVecTmp.Z());
@@ -180,7 +183,8 @@ double ImplicitMotilityPlugin::changeEnergyByCellId(const Point3D &pt, const Cel
 		Coordinates3D<double> distVector = distanceVectorCoordinatesInvariant(newCOMAfterFlip, newCOMBeforeFlip, fieldDim);
 
 
-		Coordinates3D<double> biasVecTmp = newCell->biasVector;
+		//Coordinates3D<double> biasVecTmp = newCell->biasVector;
+		biasVecTmp = Coordinates3D<double>(newCell->biasVecX, newCell->biasVecY, newCell->biasVecZ);
 
 
 		energy -= newCell->lambdaMotility*
