@@ -6,7 +6,7 @@ using namespace CompuCell3D;
 using namespace std;
 
 #include "ImplicitMotilityPlugin.h"
-#define _USE_MATH_DEFINES
+
 #include <math.h>
 #include <BasicUtils/BasicRandomNumberGenerator.h>
 
@@ -34,12 +34,20 @@ void ImplicitMotilityPlugin::init(Simulator *simulator, CC3DXMLElement *_xmlData
 	Plugin *plugin = Simulator::pluginManager.get("CenterOfMass", &pluginAlreadyRegisteredFlag); //this will load CenterOfMass plugin if it is not already loaded
 	if (!pluginAlreadyRegisteredFlag)
 		plugin->init(simulator);
+	
+	bool steppableAlreadyRegisteredFlag;
+	cerr << "initializing the steppable" << std::endl;
+	Steppable *step = Simulator::steppableManager.get("BiasVectorSteppable", &steppableAlreadyRegisteredFlag);//this will load the bias vec steppable if it is not already
+	if (!steppableAlreadyRegisteredFlag)
+		step->init(simulator);
+
+	cerr << "steppable initialized" << std::endl;
     
     pUtils=sim->getParallelUtils();
     lockPtr=new ParallelUtilsOpenMP::OpenMPLock_t;
     pUtils->initLock(lockPtr); 
    
-   update(xmlData,true);
+    update(xmlData,true);
    
     potts->getCellFactoryGroupPtr()->registerClass(&implicitMotilityDataAccessor);
     potts->registerEnergyFunctionWithName(this,"ImplicitMotility");
@@ -106,7 +114,7 @@ double ImplicitMotilityPlugin::changeEnergyByCellType(const Point3D &pt,const Ce
 		//Coordinates3D<double> biasVecTmp = oldCell->biasVector;
 		biasVecTmp = Coordinates3D<double>(oldCell->biasVecX, oldCell->biasVecY, oldCell->biasVecZ);
 
-		energy -= externalPotentialParamVector[oldCell->type].lambdaMotility*
+		energy -= motilityParamVector[oldCell->type].lambdaMotility*
 			(distVector.X()*biasVecTmp.X() + distVector.Y()*biasVecTmp.X() + distVector.Z()*biasVecTmp.Z());
 
     }
@@ -128,7 +136,7 @@ double ImplicitMotilityPlugin::changeEnergyByCellType(const Point3D &pt,const Ce
 		//Coordinates3D<double> biasVecTmp = newCell->biasVector;
 		biasVecTmp = Coordinates3D<double>(newCell->biasVecX, newCell->biasVecY, newCell->biasVecZ);
 		
-		energy -= externalPotentialParamVector[newCell->type].lambdaMotility*
+		energy -= motilityParamVector[newCell->type].lambdaMotility*
 			(distVector.X()*biasVecTmp.X() + distVector.Y()*biasVecTmp.X() + distVector.Z()*biasVecTmp.Z());
     }
     
@@ -216,6 +224,60 @@ void ImplicitMotilityPlugin::update(CC3DXMLElement *_xmlData, bool _fullInitFlag
     
     //boundaryStrategy has information aobut pixel neighbors 
     boundaryStrategy=BoundaryStrategy::getInstance();
+	
+	if (_xmlData->findElement("MotilityParameters"))
+	{
+		functionType = BYCELLTYPE;
+	}
+	else
+	{
+		functionType = BYCELLID;
+	}
+
+	switch (functionType)
+	{
+		case BYCELLID:
+			changeEnergyFcnPtr = &ImplicitMotilityPlugin::changeEnergyByCellId;
+			break;
+		case BYCELLTYPE:
+		{
+			motilityParamVector.clear();
+			vector<int> typeIdVec;
+			vector<ImplicitMotilityParam> motilityParamVectorTmp;
+
+			CC3DXMLElementList energyVec = _xmlData->getElements("MotilityParameters");
+
+			for (int i = 0; i < energyVec.size(); ++i)
+			{
+				ImplicitMotilityParam motParam;
+
+				motParam.lambdaMotility = energyVec[i]->getAttributeAsDouble("LambdaMotility");
+				motParam.typeName = energyVec[i]->getAttribute("CellType");
+				cerr << "automaton=" << automaton << endl;
+				typeIdVec.push_back(automaton->getTypeId(motParam.typeName));
+
+				motilityParamVectorTmp.push_back(motParam);
+			}
+
+			vector<int>::iterator pos = max_element(typeIdVec.begin(), typeIdVec.end());
+			int maxTypeId = *pos;
+			motilityParamVector.assign(maxTypeId + 1, ImplicitMotilityParam());
+			for (int i = 0; i < motilityParamVectorTmp.size(); i++)
+			{
+				motilityParamVector[typeIdVec[i]] = motilityParamVectorTmp[i];
+			}
+			
+			
+			
+			
+			changeEnergyFcnPtr = &ImplicitMotilityPlugin::changeEnergyByCellType;
+		}
+		break;
+
+		default:
+			changeEnergyFcnPtr = &ImplicitMotilityPlugin::changeEnergyByCellId;
+			
+	}
 
 }
 

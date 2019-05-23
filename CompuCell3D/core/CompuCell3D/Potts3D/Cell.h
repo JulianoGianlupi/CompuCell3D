@@ -69,7 +69,7 @@ namespace CompuCell3D {
         extraAttribPtr(0),
         pyAttrib(0),
 		lambdaMotility(0.0),
-		//biasVector{ 1.0, 0.0, 0.0 }
+		//jfg
 		  biasVecX(1.0),
 		  biasVecY(0.0),
 		  biasVecZ(0.0)
@@ -102,7 +102,7 @@ namespace CompuCell3D {
 	  //jfg
 	  double lambdaMotility;
 	  double biasVecX, biasVecY, biasVecZ;
-	  //Coordinates3D<float> biasVector;
+	  
 	  //
       BasicClassGroup *extraAttribPtr;
 

@@ -8,6 +8,10 @@ using namespace std;
 
 #include "BiasVectorSteppable.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+#include <BasicUtils/BasicRandomNumberGenerator.h>
+
 BiasVectorSteppable::BiasVectorSteppable() : cellFieldG(0),sim(0),potts(0),xmlData(0),boundaryStrategy(0),automaton(0),cellInventoryPtr(0){}
 
 BiasVectorSteppable::~BiasVectorSteppable() {
@@ -15,7 +19,9 @@ BiasVectorSteppable::~BiasVectorSteppable() {
 
 
 void BiasVectorSteppable::init(Simulator *simulator, CC3DXMLElement *_xmlData) {
-  xmlData=_xmlData;
+	cerr << "fot into biasvec step" << endl; //it gets to here <-
+	
+	xmlData=_xmlData;
   
   potts = simulator->getPotts();
   cellInventoryPtr=& potts->getCellInventory();
@@ -54,60 +60,58 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 
 	BasicRandomNumberGenerator *rand = BasicRandomNumberGenerator::getInstance();
 
-	//rand->
+	
     
     cerr<<"currentStep="<<currentStep<<endl;
 	for(cInvItr=cellInventoryPtr->cellInventoryBegin() ; cInvItr !=cellInventoryPtr->cellInventoryEnd() ;++cInvItr )
 	{
 		cell=cellInventoryPtr->getCell(cInvItr);
 		
-		/*double tx = 2 * rand->getRatio() - 1;
-		double ty = 2 * rand->getRatio() - 1;
-		double tz = 2 * rand->getRatio() - 1;
-
-		double sq_sum = std::sqrt(tx*tx + ty*ty + tz*tz);
-
-		
-
-		tx /= sq_sum;
-		ty /= sq_sum;
-		tz /= sq_sum;*/
-
-
-		//method for getting random unitary vector in sphere from Marsaglia 1972
-		//example and reason for not using a uniform distribution
-		//can be found @ mathworld.wolfram.com/SpherePointPicking.html
-
-		//need to add check and method for 2D
-		
-		double tx = 2 * rand->getRatio() - 1;
-		double ty = 2 * rand->getRatio() - 1;
-
-		double dist = std::sqrt(tx*tx + ty*ty);
-
-		while (dist > 1)
+		//if it is a 2D simulation
+		if (fieldDim.x == 1 || fieldDim.y == 1 || fieldDim.z == 1)			
 		{
-			double tx = 2 * rand->getRatio() - 1;
-			double ty = 2 * rand->getRatio() - 1;
-			
+			// need to add a switch to select which of the ccordinates will be 0ed
+			double angle = rand->getRatio() * 2 * M_PI;
 
-			dist = std::sqrt(tx*tx + ty*ty);
+			double x = std::cos(angle);
+			double y = std::sin(angle);
+
+			cell->biasVecX = x;
+			cell->biasVecY = y;
+			cell->biasVecZ = 0;
 
 		}
 
-		if (dist<=1)
+		else
 		{
-			double x = 2 * tx*std::sqrt(1 - tx*tx - ty*ty);
-			double y = 2 * ty * std::sqrt(1 - tx*tx - ty*ty);
-			double z = 1 - 2 * (tx*tx + ty*ty);
+			//method for getting random unitary vector in sphere from Marsaglia 1972
+			//example and reason for not using a uniform distribution
+			//can be found @ mathworld.wolfram.com/SpherePointPicking.html
+			double tx = 2 * rand->getRatio() - 1;
+			double ty = 2 * rand->getRatio() - 1;
 
-			//cell->biasVector.X = x;
-			
-			//cell->biasVector.Y = y;
-			//cell->biasVector.Z = z;
-			cell->biasVecX = x;
-			cell->biasVecY = y;
-			cell->biasVecZ = z;
+			double dist = std::sqrt(tx*tx + ty*ty);
+
+			while (dist > 1)
+			{
+				double tx = 2 * rand->getRatio() - 1;
+				double ty = 2 * rand->getRatio() - 1;
+
+
+				dist = std::sqrt(tx*tx + ty*ty);
+
+			}
+
+			if (dist <= 1)
+			{
+				double x = 2 * tx*std::sqrt(1 - tx*tx - ty*ty);
+				double y = 2 * ty * std::sqrt(1 - tx*tx - ty*ty);
+				double z = 1 - 2 * (tx*tx + ty*ty);
+
+				cell->biasVecX = x;
+				cell->biasVecY = y;
+				cell->biasVecZ = z;
+			}
 		}
         //cerr<<"cell.id="<<cell->id<<" vol="<<cell->volume<<endl;
     }

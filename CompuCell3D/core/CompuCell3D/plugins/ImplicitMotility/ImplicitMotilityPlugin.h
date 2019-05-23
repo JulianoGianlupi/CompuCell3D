@@ -34,6 +34,7 @@ namespace CompuCell3D {
 		}
 		
 		double lambdaMotility;
+		std::string typeName;
 	};
 
     class IMPLICITMOTILITY_EXPORT  ImplicitMotilityPlugin : public Plugin ,public EnergyFunction  {
@@ -60,8 +61,12 @@ namespace CompuCell3D {
 		AdjacentNeighbor  * adjNeighbor_ptr;
 		Point3D boundaryConditionIndicator;
 
-		std::vector<ImplicitMotilityParam> externalPotentialParamVector;
+		std::vector<ImplicitMotilityParam> motilityParamVector;
 		Coordinates3D<double> biasVecTmp;
+
+
+		enum FunctionType { GLOBAL = 0, BYCELLTYPE = 1, BYCELLID = 2 };
+		FunctionType functionType;
         
     public:
 
@@ -72,6 +77,8 @@ namespace CompuCell3D {
 
         
         //Energy function interface
+		typedef double (ImplicitMotilityPlugin::*changeEnergy_t)(const Point3D &pt, const CellG *newCell, const CellG *oldCell);
+		ImplicitMotilityPlugin::changeEnergy_t changeEnergyFcnPtr;
         virtual double changeEnergyByCellType(const Point3D &pt, const CellG *newCell, const CellG *oldCell);
 
 		double changeEnergyByCellId(const Point3D & pt, const CellG * newCell, const CellG * oldCell);
