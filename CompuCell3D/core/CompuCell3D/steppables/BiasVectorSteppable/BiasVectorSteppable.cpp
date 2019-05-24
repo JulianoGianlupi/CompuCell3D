@@ -60,7 +60,7 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 
 	BasicRandomNumberGenerator *rand = BasicRandomNumberGenerator::getInstance();
 
-	
+	cout << "in bias vector step" << endl;
     
     cerr<<"currentStep="<<currentStep<<endl;
 	for(cInvItr=cellInventoryPtr->cellInventoryBegin() ; cInvItr !=cellInventoryPtr->cellInventoryEnd() ;++cInvItr )
@@ -75,6 +75,9 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 
 			double x = std::cos(angle);
 			double y = std::sin(angle);
+			cout << "in the 2d step method" << endl;
+			cout << x << endl;
+			cout << y << endl;
 
 			cell->biasVecX = x;
 			cell->biasVecY = y;
@@ -91,7 +94,8 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 			double ty = 2 * rand->getRatio() - 1;
 
 			double dist = std::sqrt(tx*tx + ty*ty);
-
+			cerr << "in the 3d step method" << endl;
+			
 			while (dist > 1)
 			{
 				double tx = 2 * rand->getRatio() - 1;
@@ -107,6 +111,10 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 				double x = 2 * tx*std::sqrt(1 - tx*tx - ty*ty);
 				double y = 2 * ty * std::sqrt(1 - tx*tx - ty*ty);
 				double z = 1 - 2 * (tx*tx + ty*ty);
+
+				cout << x << endl;
+				cout << y << endl;
+				cout << z << endl;
 
 				cell->biasVecX = x;
 				cell->biasVecY = y;
@@ -127,16 +135,16 @@ void BiasVectorSteppable::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
     ASSERT_OR_THROW("CELL TYPE PLUGIN WAS NOT PROPERLY INITIALIZED YET. MAKE SURE THIS IS THE FIRST PLUGIN THAT YOU SET", automaton)
    set<unsigned char> cellTypesSet;
 
-    CC3DXMLElement * exampleXMLElem=_xmlData->getFirstElement("Example");
-    if (exampleXMLElem){
-        double param=exampleXMLElem->getDouble();
-        cerr<<"param="<<param<<endl;
-        if(exampleXMLElem->findAttribute("Type")){
-            std::string attrib=exampleXMLElem->getAttribute("Type");
-            // double attrib=exampleXMLElem->getAttributeAsDouble("Type"); //in case attribute is of type double
-            cerr<<"attrib="<<attrib<<endl;
-        }
-    }
+    //CC3DXMLElement * exampleXMLElem=_xmlData->getFirstElement("Example");
+    //if (exampleXMLElem){
+    //    double param=exampleXMLElem->getDouble();
+    //    cerr<<"param="<<param<<endl;
+    //    if(exampleXMLElem->findAttribute("Type")){
+    //        std::string attrib=exampleXMLElem->getAttribute("Type");
+    //        // double attrib=exampleXMLElem->getAttributeAsDouble("Type"); //in case attribute is of type double
+    //        cerr<<"attrib="<<attrib<<endl;
+    //    }
+    //}
     
     //boundaryStrategy has information aobut pixel neighbors 
     boundaryStrategy=BoundaryStrategy::getInstance();

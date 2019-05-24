@@ -11,8 +11,11 @@ class MotilityDemo2DSteppable(SteppableBasePy):
         pass
     def step(self,mcs):        
         #type here the code that will run every _frequency MCS
-        for cell in self.cellList:
-            print "cell.id=",cell.id
+#         for cell in self.cellList:
+#             print "\n cell.biasVecX=",cell.biasVecX
+#             print "\n cell.biasVecY=",cell.biasVecX
+#             print "\n cell.biasVecZ=",cell.biasVecZ
+        pass
     def finish(self):
         # Finish Function gets called after the last MCS
         pass

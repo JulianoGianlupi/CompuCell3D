@@ -37,7 +37,7 @@
    
    <Plugin Name="ImplicitMotility">
         <MotilityParameters CellType="MotCell" LambdaMotility="20"/>
-        <MotilityParameters CellType="MotCell" LambdaMotility="15"/>
+        <MotilityParameters CellType="MotCell2" LambdaMotility="15"/>
    </Plugin>
    
    
@@ -47,10 +47,10 @@
       <!-- Initial layout of cells in the form of spherical (circular in 2D) blob -->
       <Region>
          <Center x="50" y="50" z="0"/>
-         <Radius>30</Radius>
+         <Radius>3</Radius>
          <Gap>0</Gap>
          <Width>6</Width>
-         <Types>MotCell,MotCell2</Types>
+         <Types>MotCell</Types>
       </Region>
    </Steppable>
 </CompuCell3D>

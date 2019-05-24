@@ -139,6 +139,8 @@ double ImplicitMotilityPlugin::changeEnergyByCellType(const Point3D &pt,const Ce
 		energy -= motilityParamVector[newCell->type].lambdaMotility*
 			(distVector.X()*biasVecTmp.X() + distVector.Y()*biasVecTmp.X() + distVector.Z()*biasVecTmp.Z());
     }
+
+	cout << "in the by cell type energy" << endl;
     
     return energy;    
 }            
@@ -199,7 +201,7 @@ double ImplicitMotilityPlugin::changeEnergyByCellId(const Point3D &pt, const Cel
 			(distVector.X()*biasVecTmp.X() + distVector.Y()*biasVecTmp.X() + distVector.Z()*biasVecTmp.Z());
 		//negative because it'd be confusing for users to have to define a negative lambda to go to a positive direction
 	}
-
+	cout << "in the by cell id energy" << endl;
 	return energy;
 }
 
