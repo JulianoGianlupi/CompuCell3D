@@ -2,6 +2,10 @@
 from PySteppables import *
 import CompuCell
 import sys
+
+import numpy as np
+import numpy.linalg as nalg
+
 class MotilityDemo3DSteppable(SteppableBasePy):
 
     def __init__(self,_simulator,_frequency=1):
@@ -15,6 +19,7 @@ class MotilityDemo3DSteppable(SteppableBasePy):
             print "\n cell.biasVecX=",cell.biasVecX
             print "\n cell.biasVecY=",cell.biasVecY
             print "\n cell.biasVecZ=",cell.biasVecZ
+            print "\n norm = ", nalg.norm([cell.biasVecX,cell.biasVecY,cell.biasVecZ])
     def finish(self):
         # Finish Function gets called after the last MCS
         pass

@@ -77,11 +77,11 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 			double y = std::sin(angle);
 			/*cout << "in the 2d step method" << endl;
 			cout << x << endl;
-			cout << y << endl;
+			cout << y << endl;*/
 
 			cell->biasVecX = x;
 			cell->biasVecY = y;
-			cell->biasVecZ = 0;*/
+			cell->biasVecZ = 0;
 
 		}
 
