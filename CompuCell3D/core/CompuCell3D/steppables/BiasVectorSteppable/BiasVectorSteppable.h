@@ -49,9 +49,7 @@ namespace CompuCell3D {
     virtual void finish() {}
 
 
-	double method3DVector(double arr[]);
-
-	//SteerableObject interface
+    //SteerableObject interface
     virtual void update(CC3DXMLElement *_xmlData, bool _fullInitFlag=false);
     virtual std::string steerableName();
 	 virtual std::string toString();
