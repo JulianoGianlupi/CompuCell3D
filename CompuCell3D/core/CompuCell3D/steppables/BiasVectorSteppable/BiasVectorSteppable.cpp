@@ -94,7 +94,7 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 			double ty = 2 * rand->getRatio() - 1;
 
 			double dist_sqrd = std::sqrt(tx*tx + ty*ty);
-			cerr << "in the 3d step method" << endl;
+			/*cerr << "in the 3d step method" << endl;*/
 			
 			while (dist_sqrd >= 1)
 			{
@@ -112,13 +112,13 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 				double y = 2 * ty * std::sqrt(1 - tx*tx - ty*ty);
 				double z = 1 - 2 * (tx*tx + ty*ty);
 
-				cout << "tx=" << tx << endl;
+				/*cout << "tx=" << tx << endl;
 				cout << "ty=" << ty << endl;
 				cout << "dist=" << dist_sqrd << endl;
 
 				cout << x << endl;
 				cout << y << endl;
-				cout << z << endl;
+				cout << z << endl;*/
 
 				cell->biasVecX = x;
 				cell->biasVecY = y;
