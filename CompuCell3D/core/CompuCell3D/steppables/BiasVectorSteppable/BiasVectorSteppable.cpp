@@ -60,7 +60,7 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 
 	BasicRandomNumberGenerator *rand = BasicRandomNumberGenerator::getInstance();
 
-	cout << "in bias vector step" << endl;
+	//cout << "in bias vector step" << endl;
     
     cerr<<"currentStep="<<currentStep<<endl;
 	for(cInvItr=cellInventoryPtr->cellInventoryBegin() ; cInvItr !=cellInventoryPtr->cellInventoryEnd() ;++cInvItr )
@@ -87,47 +87,111 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 
 		else
 		{
-			//method for getting random unitary vector in sphere from Marsaglia 1972
-			//example and reason for not using a uniform distribution
-			//can be found @ mathworld.wolfram.com/SpherePointPicking.html
-			double tx = 2 * rand->getRatio() - 1;
-			double ty = 2 * rand->getRatio() - 1;
-
-			double dist_sqrd = std::sqrt(tx*tx + ty*ty);
-			/*cerr << "in the 3d step method" << endl;*/
 			
-			while (dist_sqrd >= 1)
-			{
-				tx = 2 * rand->getRatio() - 1;
-				ty = 2 * rand->getRatio() - 1;
+			
+			double arr[3];
+			BiasVectorSteppable::method3DVector(arr);
+			cell->biasVecX = arr[0];
+			cell->biasVecY = arr[1];
+			cell->biasVecZ = arr[2];
 
 
-				dist_sqrd = tx*tx + ty*ty;
+			//
+			//
+			////method for getting random unitary vector in sphere from Marsaglia 1972
+			////example and reason for not using a uniform distribution
+			////can be found @ mathworld.wolfram.com/SpherePointPicking.html
+			//double tx = 2 * rand->getRatio() - 1;
+			//double ty = 2 * rand->getRatio() - 1;
 
-			}
+			//double dist_sqrd = std::sqrt(tx*tx + ty*ty);
+			///*cerr << "in the 3d step method" << endl;*/
+			//
+			//while (dist_sqrd >= 1)
+			//{
+			//	tx = 2 * rand->getRatio() - 1;
+			//	ty = 2 * rand->getRatio() - 1;
 
-			if (dist_sqrd < 1)
-			{
-				double x = 2 * tx * std::sqrt(1 - tx*tx - ty*ty);
-				double y = 2 * ty * std::sqrt(1 - tx*tx - ty*ty);
-				double z = 1 - 2 * (tx*tx + ty*ty);
 
-				/*cout << "tx=" << tx << endl;
-				cout << "ty=" << ty << endl;
-				cout << "dist=" << dist_sqrd << endl;
+			//	dist_sqrd = tx*tx + ty*ty;
 
-				cout << x << endl;
-				cout << y << endl;
-				cout << z << endl;*/
+			//}
 
-				cell->biasVecX = x;
-				cell->biasVecY = y;
-				cell->biasVecZ = z;
-			}
+			//if (dist_sqrd < 1)
+			//{
+			//	double x = 2 * tx * std::sqrt(1 - tx*tx - ty*ty);
+			//	double y = 2 * ty * std::sqrt(1 - tx*tx - ty*ty);
+			//	double z = 1 - 2 * (tx*tx + ty*ty);
+
+			//	/*cout << "tx=" << tx << endl;
+			//	cout << "ty=" << ty << endl;
+			//	cout << "dist=" << dist_sqrd << endl;
+
+			//	cout << x << endl;
+			//	cout << y << endl;
+			//	cout << z << endl;*/
+
+			//	cell->biasVecX = x;
+			//	cell->biasVecY = y;
+			//	cell->biasVecZ = z;
+
+			//	
+			//}
 		}
         //cerr<<"cell.id="<<cell->id<<" vol="<<cell->volume<<endl;
     }
 
+}
+
+
+
+double BiasVectorSteppable::method3DVector(double arr[]) 
+{
+	//method for getting random unitary vector in sphere from Marsaglia 1972
+	//example and reason for not using a uniform distribution
+	//can be found @ mathworld.wolfram.com/SpherePointPicking.html
+	
+	BasicRandomNumberGenerator *rand = BasicRandomNumberGenerator::getInstance();
+
+	double tx = 2 * rand->getRatio() - 1;
+	double ty = 2 * rand->getRatio() - 1;
+
+	double dist_sqrd = std::sqrt(tx*tx + ty*ty);
+	/*cerr << "in the 3d step method" << endl;*/
+
+	while (dist_sqrd >= 1)
+	{
+		tx = 2 * rand->getRatio() - 1;
+		ty = 2 * rand->getRatio() - 1;
+
+
+		dist_sqrd = tx*tx + ty*ty;
+
+	}
+
+	if (dist_sqrd < 1)
+	{
+		double x = 2 * tx * std::sqrt(1 - tx*tx - ty*ty);
+		double y = 2 * ty * std::sqrt(1 - tx*tx - ty*ty);
+		double z = 1 - 2 * (tx*tx + ty*ty);
+
+		/*cout << "tx=" << tx << endl;
+		cout << "ty=" << ty << endl;
+		cout << "dist=" << dist_sqrd << endl;
+
+		cout << x << endl;
+		cout << y << endl;
+		cout << z << endl;*/
+
+		/*cell->biasVecX = x;
+		cell->biasVecY = y;
+		cell->biasVecZ = z;*/
+
+		arr[0] = x;
+		arr[1] = y;
+		arr[2] = z;
+
+	}
 }
 
 
