@@ -131,6 +131,18 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 }
 
 
+
+/*
+void BiasVectorSteppable::Method2Dx( CellG cell)
+{
+	CellInventory::cellInventoryIterator cInvItr;
+	CellG * cell = 0;
+
+	BasicRandomNumberGenerator *rand = BasicRandomNumberGenerator::getInstance();
+
+}
+*/
+
 void BiasVectorSteppable::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 
     //PARSE XML IN THIS FUNCTION
