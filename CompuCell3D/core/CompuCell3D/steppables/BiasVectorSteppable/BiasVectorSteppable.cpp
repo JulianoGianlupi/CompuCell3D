@@ -93,20 +93,20 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 			double tx = 2 * rand->getRatio() - 1;
 			double ty = 2 * rand->getRatio() - 1;
 
-			double dist = std::sqrt(tx*tx + ty*ty);
+			double dist_sqrd = std::sqrt(tx*tx + ty*ty);
 			cerr << "in the 3d step method" << endl;
 			
-			while (dist > 1)
+			while (dist_sqrd >= 1)
 			{
-				double tx = 2 * rand->getRatio() - 1;
-				double ty = 2 * rand->getRatio() - 1;
+				tx = 2 * rand->getRatio() - 1;
+				ty = 2 * rand->getRatio() - 1;
 
 
-				dist = std::sqrt(tx*tx + ty*ty);
+				dist_sqrd = tx*tx + ty*ty;
 
 			}
 
-			if (dist <= 1)
+			if (dist_sqrd < 1)
 			{
 				double x = 2 * tx * std::sqrt(1 - tx*tx - ty*ty);
 				double y = 2 * ty * std::sqrt(1 - tx*tx - ty*ty);
@@ -114,7 +114,7 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 
 				cout << "tx=" << tx << endl;
 				cout << "ty=" << ty << endl;
-				cout << "dist=" << dist << endl;
+				cout << "dist=" << dist_sqrd << endl;
 
 				cout << x << endl;
 				cout << y << endl;
