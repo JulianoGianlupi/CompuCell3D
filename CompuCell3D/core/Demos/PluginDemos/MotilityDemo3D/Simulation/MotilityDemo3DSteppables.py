@@ -2,7 +2,7 @@
 from PySteppables import *
 import CompuCell
 import sys
-class MotilityDemo2DSteppable(SteppableBasePy):
+class MotilityDemo3DSteppable(SteppableBasePy):
 
     def __init__(self,_simulator,_frequency=1):
         SteppableBasePy.__init__(self,_simulator,_frequency)
@@ -15,7 +15,6 @@ class MotilityDemo2DSteppable(SteppableBasePy):
             print "\n cell.biasVecX=",cell.biasVecX
             print "\n cell.biasVecY=",cell.biasVecY
             print "\n cell.biasVecZ=",cell.biasVecZ
-        
     def finish(self):
         # Finish Function gets called after the last MCS
         pass

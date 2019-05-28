@@ -37,9 +37,17 @@ void ImplicitMotilityPlugin::init(Simulator *simulator, CC3DXMLElement *_xmlData
 	
 	bool steppableAlreadyRegisteredFlag;
 	cerr << "initializing the steppable" << std::endl;
-	Steppable *step = Simulator::steppableManager.get("BiasVectorSteppable", &steppableAlreadyRegisteredFlag);//this will load the bias vec steppable if it is not already
-	if (!steppableAlreadyRegisteredFlag)
+	Steppable *step = Simulator::steppableManager.get("BiasVectorSteppable", 
+											&steppableAlreadyRegisteredFlag);//this will load the bias vec steppable if it is not already
+	if (!steppableAlreadyRegisteredFlag) 
+	{
 		step->init(simulator);
+		ClassRegistry * class_registry = simulator->getClassRegistry();
+		class_registry->addStepper("BiasVectorSteppable", step);
+
+	}
+
+
 
 	cerr << "steppable initialized" << std::endl;
     

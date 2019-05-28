@@ -75,13 +75,13 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 
 			double x = std::cos(angle);
 			double y = std::sin(angle);
-			cout << "in the 2d step method" << endl;
+			/*cout << "in the 2d step method" << endl;
 			cout << x << endl;
 			cout << y << endl;
 
 			cell->biasVecX = x;
 			cell->biasVecY = y;
-			cell->biasVecZ = 0;
+			cell->biasVecZ = 0;*/
 
 		}
 
@@ -108,9 +108,13 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 
 			if (dist <= 1)
 			{
-				double x = 2 * tx*std::sqrt(1 - tx*tx - ty*ty);
+				double x = 2 * tx * std::sqrt(1 - tx*tx - ty*ty);
 				double y = 2 * ty * std::sqrt(1 - tx*tx - ty*ty);
 				double z = 1 - 2 * (tx*tx + ty*ty);
+
+				cout << "tx=" << tx << endl;
+				cout << "ty=" << ty << endl;
+				cout << "dist=" << dist << endl;
 
 				cout << x << endl;
 				cout << y << endl;
