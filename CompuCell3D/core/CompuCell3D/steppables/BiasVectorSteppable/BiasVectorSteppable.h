@@ -46,6 +46,13 @@ namespace CompuCell3D {
     //steppable interface
     virtual void start();
     virtual void step(const unsigned int currentStep);
+
+	virtual void step_3d(const unsigned int currentStep);
+	virtual void sted_2d_x(const unsigned int currentStep); // for x == 1
+	virtual void sted_2d_y(const unsigned int currentStep); // for y == 1
+	virtual void sted_2d_z(const unsigned int currentStep); // for z == 1
+
+
     virtual void finish() {}
 
 

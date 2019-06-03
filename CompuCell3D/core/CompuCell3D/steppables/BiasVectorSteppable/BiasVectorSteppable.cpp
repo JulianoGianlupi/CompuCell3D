@@ -60,7 +60,7 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 
 	BasicRandomNumberGenerator *rand = BasicRandomNumberGenerator::getInstance();
 
-	cout << "in bias vector step" << endl;
+	//cout << "in bias vector step" << endl;
     
     cerr<<"currentStep="<<currentStep<<endl;
 	for(cInvItr=cellInventoryPtr->cellInventoryBegin() ; cInvItr !=cellInventoryPtr->cellInventoryEnd() ;++cInvItr )
@@ -130,18 +130,145 @@ void BiasVectorSteppable::step(const unsigned int currentStep){
 
 }
 
-
-
-/*
-void BiasVectorSteppable::Method2Dx( CellG cell)
+void CompuCell3D::BiasVectorSteppable::step_3d(const unsigned int currentStep)
 {
 	CellInventory::cellInventoryIterator cInvItr;
 	CellG * cell = 0;
 
 	BasicRandomNumberGenerator *rand = BasicRandomNumberGenerator::getInstance();
 
+	cout << "in bias vector 3d step" << endl;
+
+	cerr << "currentStep=" << currentStep << endl;
+
+	for (cInvItr = cellInventoryPtr->cellInventoryBegin(); cInvItr != cellInventoryPtr->cellInventoryEnd(); ++cInvItr)
+	{
+		cell = cellInventoryPtr->getCell(cInvItr);
+
+		//method for getting random unitary vector in sphere from Marsaglia 1972
+		//example and reason for not using a uniform distribution
+		//can be found @ mathworld.wolfram.com/SpherePointPicking.html
+		double tx = 2 * rand->getRatio() - 1;
+		double ty = 2 * rand->getRatio() - 1;
+
+		double dist_sqrd = std::sqrt(tx*tx + ty*ty);
+		/*cerr << "in the 3d step method" << endl;*/
+
+		while (dist_sqrd >= 1)
+		{
+			tx = 2 * rand->getRatio() - 1;
+			ty = 2 * rand->getRatio() - 1;
+
+
+			dist_sqrd = tx*tx + ty*ty;
+
+		}
+
+		if (dist_sqrd < 1)
+		{
+			double x = 2 * tx * std::sqrt(1 - tx*tx - ty*ty);
+			double y = 2 * ty * std::sqrt(1 - tx*tx - ty*ty);
+			double z = 1 - 2 * (tx*tx + ty*ty);
+
+			/*cout << "tx=" << tx << endl;
+			cout << "ty=" << ty << endl;
+			cout << "dist=" << dist_sqrd << endl;
+
+			cout << x << endl;
+			cout << y << endl;
+			cout << z << endl;*/
+
+			cell->biasVecX = x;
+			cell->biasVecY = y;
+			cell->biasVecZ = z;
+		}
+	}
 }
-*/
+
+void CompuCell3D::BiasVectorSteppable::sted_2d_x(const unsigned int currentStep)
+{
+	CellInventory::cellInventoryIterator cInvItr;
+	CellG * cell = 0;
+
+	BasicRandomNumberGenerator *rand = BasicRandomNumberGenerator::getInstance();
+
+	//cout << "in bias vector step" << endl;
+
+	cerr << "currentStep=" << currentStep << endl;
+
+	for (cInvItr = cellInventoryPtr->cellInventoryBegin(); cInvItr != cellInventoryPtr->cellInventoryEnd(); ++cInvItr)
+	{
+		double angle = rand->getRatio() * 2 * M_PI;
+
+		double z = std::cos(angle);
+		double y = std::sin(angle);
+		/*cout << "in the 2d step method" << endl;
+		cout << x << endl;
+		cout << y << endl;*/
+
+		cell->biasVecX = 0;
+		cell->biasVecY = y;
+		cell->biasVecZ = z;
+	}
+
+}
+
+void CompuCell3D::BiasVectorSteppable::sted_2d_y(const unsigned int currentStep)
+{
+	CellInventory::cellInventoryIterator cInvItr;
+	CellG * cell = 0;
+
+	BasicRandomNumberGenerator *rand = BasicRandomNumberGenerator::getInstance();
+
+	//cout << "in bias vector step" << endl;
+
+	cerr << "currentStep=" << currentStep << endl;
+
+	for (cInvItr = cellInventoryPtr->cellInventoryBegin(); cInvItr != cellInventoryPtr->cellInventoryEnd(); ++cInvItr)
+	{
+		double angle = rand->getRatio() * 2 * M_PI;
+
+		double x = std::cos(angle);
+		double z = std::sin(angle);
+		/*cout << "in the 2d step method" << endl;
+		cout << x << endl;
+		cout << y << endl;*/
+
+		cell->biasVecX = x;
+		cell->biasVecY = 0;
+		cell->biasVecZ = z;
+	}
+}
+
+void CompuCell3D::BiasVectorSteppable::sted_2d_z(const unsigned int currentStep)
+{
+	CellInventory::cellInventoryIterator cInvItr;
+	CellG * cell = 0;
+
+	BasicRandomNumberGenerator *rand = BasicRandomNumberGenerator::getInstance();
+
+	//cout << "in bias vector step" << endl;
+
+	cerr << "currentStep=" << currentStep << endl;
+
+	for (cInvItr = cellInventoryPtr->cellInventoryBegin(); cInvItr != cellInventoryPtr->cellInventoryEnd(); ++cInvItr)
+	{
+		double angle = rand->getRatio() * 2 * M_PI;
+
+		double x = std::cos(angle);
+		double y = std::sin(angle);
+		/*cout << "in the 2d step method" << endl;
+		cout << x << endl;
+		cout << y << endl;*/
+
+		cell->biasVecX = x;
+		cell->biasVecY = y;
+		cell->biasVecZ = 0;
+	}
+}
+
+
+
 
 void BiasVectorSteppable::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 
