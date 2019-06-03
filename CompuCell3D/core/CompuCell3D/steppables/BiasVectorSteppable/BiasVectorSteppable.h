@@ -33,6 +33,11 @@ namespace CompuCell3D {
     
     Dim3D fieldDim;
 
+	enum StepType{STEP3D = 0, STEP2DX = 1, STEP2DY = 2, STEP2DZ = 3};
+	StepType stepType;
+
+	typedef void (BiasVectorSteppable::*step_t)(const unsigned int currentStep);
+	BiasVectorSteppable::step_t stepFcnPtr;
     
   public:
     BiasVectorSteppable ();

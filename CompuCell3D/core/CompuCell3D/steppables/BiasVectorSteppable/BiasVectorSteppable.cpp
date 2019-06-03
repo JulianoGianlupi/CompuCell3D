@@ -185,7 +185,7 @@ void CompuCell3D::BiasVectorSteppable::step_3d(const unsigned int currentStep)
 	}
 }
 
-void CompuCell3D::BiasVectorSteppable::sted_2d_x(const unsigned int currentStep)
+void CompuCell3D::BiasVectorSteppable::step_2d_x(const unsigned int currentStep)
 {
 	CellInventory::cellInventoryIterator cInvItr;
 	CellG * cell = 0;
@@ -213,7 +213,7 @@ void CompuCell3D::BiasVectorSteppable::sted_2d_x(const unsigned int currentStep)
 
 }
 
-void CompuCell3D::BiasVectorSteppable::sted_2d_y(const unsigned int currentStep)
+void CompuCell3D::BiasVectorSteppable::step_2d_y(const unsigned int currentStep)
 {
 	CellInventory::cellInventoryIterator cInvItr;
 	CellG * cell = 0;
@@ -240,7 +240,7 @@ void CompuCell3D::BiasVectorSteppable::sted_2d_y(const unsigned int currentStep)
 	}
 }
 
-void CompuCell3D::BiasVectorSteppable::sted_2d_z(const unsigned int currentStep)
+void CompuCell3D::BiasVectorSteppable::step_2d_z(const unsigned int currentStep)
 {
 	CellInventory::cellInventoryIterator cInvItr;
 	CellG * cell = 0;
@@ -291,6 +291,39 @@ void BiasVectorSteppable::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
     
     //boundaryStrategy has information aobut pixel neighbors 
     boundaryStrategy=BoundaryStrategy::getInstance();
+
+	//if (fieldDim.x == 1 || fieldDim.y == 1 || fieldDim.z == 1)
+
+	if (fieldDim.x == 1)
+	{
+		stepType = STEP2DX;
+	}
+	else if(fieldDim.y == 1)
+	{
+		stepType = STEP2DY;
+	}
+	else if (fieldDim.z == 1)
+	{
+		stepType = STEP2DZ;
+	}
+	else
+	{
+		stepType = STEP3D;
+	}
+
+
+	switch (stepType)
+	{
+	case STEP3D:
+		stepFcnPtr = &BiasVectorSteppable::step_3d;
+	case STEP2DX:
+		stepFcnPtr = &BiasVectorSteppable::step_2d_x;
+	case STEP2DY:
+		stepFcnPtr = &BiasVectorSteppable::step_2d_y;
+	case STEP2DZ:
+		stepFcnPtr = &BiasVectorSteppable::step_2d_z;
+	}
+
 
 }
 
