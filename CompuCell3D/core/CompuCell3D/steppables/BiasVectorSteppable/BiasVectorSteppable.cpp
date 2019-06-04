@@ -203,6 +203,9 @@ void CompuCell3D::BiasVectorSteppable::step_2d_x(const unsigned int currentStep)
 
 	for (cInvItr = cellInventoryPtr->cellInventoryBegin(); cInvItr != cellInventoryPtr->cellInventoryEnd(); ++cInvItr)
 	{
+
+		cell = cellInventoryPtr->getCell(cInvItr);
+
 		double angle = rand->getRatio() * 2 * M_PI;
 
 		double z = std::cos(angle);
@@ -231,6 +234,9 @@ void CompuCell3D::BiasVectorSteppable::step_2d_y(const unsigned int currentStep)
 
 	for (cInvItr = cellInventoryPtr->cellInventoryBegin(); cInvItr != cellInventoryPtr->cellInventoryEnd(); ++cInvItr)
 	{
+
+		cell = cellInventoryPtr->getCell(cInvItr);
+
 		double angle = rand->getRatio() * 2 * M_PI;
 
 		double x = std::cos(angle);
@@ -258,6 +264,10 @@ void CompuCell3D::BiasVectorSteppable::step_2d_z(const unsigned int currentStep)
 
 	for (cInvItr = cellInventoryPtr->cellInventoryBegin(); cInvItr != cellInventoryPtr->cellInventoryEnd(); ++cInvItr)
 	{
+
+
+		cell = cellInventoryPtr->getCell(cInvItr);
+
 		double angle = rand->getRatio() * 2 * M_PI;
 
 		double x = std::cos(angle);
