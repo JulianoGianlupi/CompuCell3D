@@ -331,12 +331,18 @@ void BiasVectorSteppable::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 	{
 	case STEP3D:
 		stepFcnPtr = &BiasVectorSteppable::step_3d;
+		break;
 	case STEP2DX:
 		stepFcnPtr = &BiasVectorSteppable::step_2d_x;
+		break;
 	case STEP2DY:
 		stepFcnPtr = &BiasVectorSteppable::step_2d_y;
+		break;
 	case STEP2DZ:
 		stepFcnPtr = &BiasVectorSteppable::step_2d_z;
+		break;
+	default:
+		stepFcnPtr = &BiasVectorSteppable::step_3d;
 	}
 
 
