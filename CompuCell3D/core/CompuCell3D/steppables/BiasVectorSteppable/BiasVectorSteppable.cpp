@@ -19,7 +19,7 @@ BiasVectorSteppable::~BiasVectorSteppable() {
 
 
 void BiasVectorSteppable::init(Simulator *simulator, CC3DXMLElement *_xmlData) {
-	cerr << "fot into biasvec step" << endl; //it gets to here <-
+	cerr << "got into biasvec step" << endl; //it gets to here <-
 	
 	xmlData=_xmlData;//the problem was the xml data being a nullptr
   
