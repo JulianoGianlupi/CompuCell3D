@@ -34,7 +34,8 @@ protected:
 	virtual void extraInitImpl();
 	virtual void initCellTypesAndBoundariesImpl();
     virtual void stepImpl(const unsigned int _currentStep);
-    virtual void diffuseSingleField(unsigned int idx);    
+    virtual void diffuseSingleField(unsigned int idx);
+	double diffCoefCheck(double neigh_coef, double curr_coef);
 	virtual void solverSpecific(CC3DXMLElement *_xmlData);//reading solver-specific information from XML file
     virtual Dim3D getInternalDim();
         

@@ -1043,8 +1043,14 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
 							const std::vector<Point3D> & offsetVecRef=boundaryStrategy->getOffsetVec(pt);
 
                             for (register int i = 0  ; i<=maxNeighborIndex ; ++i ){
-                                const Point3D & offset = offsetVecRef[i];								
-								varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z)-currentConcentration);
+                                const Point3D & offset = offsetVecRef[i];	
+								
+								double diffCoef_difference = DiffusionSolverFE_CPU::diffCoefCheck(diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)], currentDiffCoef);
+
+
+								//varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z)-currentConcentration);
+
+								varDiffSumTerm += diffCoef_difference * (concentrationField.getDirect(x + offset.x, y + offset.y, z + offset.z) - currentConcentration);
                             }
 							varDiffSumTerm /=2.0;
 
@@ -1134,7 +1140,15 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
 									}
 								}
 
-								varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(c_offset-currentConcentration);
+
+								double diffCoef_difference = DiffusionSolverFE_CPU::diffCoefCheck(diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)], currentDiffCoef);
+
+
+								//varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(c_offset-currentConcentration);
+
+								varDiffSumTerm += diffCoef_difference * (c_offset - currentConcentration);
+
+
                             }
                             
 							varDiffSumTerm /= 2.0;
@@ -1245,7 +1259,17 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
     
 }
 
-
+double DiffusionSolverFE_CPU::diffCoefCheck(double neigh_coef, double curr_coef) // check edge case for variable diff coef where one of the coeficients is 0
+{
+	if (curr_coef == 0.0 || neigh_coef == 0.0)
+	{
+		return 0.0;
+	}
+	else
+	{
+		return neigh_coef - curr_coef;
+	}
+}
 
 
 
