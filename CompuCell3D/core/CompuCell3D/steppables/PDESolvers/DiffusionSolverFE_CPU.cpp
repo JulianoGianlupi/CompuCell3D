@@ -1045,7 +1045,8 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
                             for (register int i = 0  ; i<=maxNeighborIndex ; ++i ){
                                 const Point3D & offset = offsetVecRef[i];	
 								
-								double diffCoef_difference = DiffusionSolverFE_CPU::diffCoefCheck(diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)], currentDiffCoef);
+								double diffCoef_difference = DiffusionSolverFE_CPU::diffCoefCheck(
+									diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)], currentDiffCoef);
 
 
 								//varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z)-currentConcentration);
@@ -1141,7 +1142,8 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
 								}
 
 
-								double diffCoef_difference = DiffusionSolverFE_CPU::diffCoefCheck(diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)], currentDiffCoef);
+								double diffCoef_difference = DiffusionSolverFE_CPU::diffCoefCheck(
+									diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)], currentDiffCoef);
 
 
 								//varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(c_offset-currentConcentration);
