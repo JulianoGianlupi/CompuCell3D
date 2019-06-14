@@ -963,6 +963,9 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
 		Point3D pt,n;		
 		CellG * currentCellPtr=0,*nCell=0;
 		short currentCellType=0;
+		// jfg 
+		int currentCellID = 0;
+		// jfg end
 		float currentConcentration=0;
 		float updatedConcentration=0.0;
 		float concentrationSum=0.0;
@@ -975,6 +978,9 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
 		std::set<unsigned char>::iterator sitr;
 
 		Array3DCUDA<unsigned char> & cellTypeArray= *h_celltype_field; ////
+		// jfg
+		Array3DCUDA<float> & cellIDArray = *h_cellid_field; // I don't think this is what I want. I should get the cell itself.
+		// jfg end
 
 		int threadNumber=pUtils->getCurrentWorkNodeNumber(); ////
 
@@ -998,6 +1004,9 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
                 
                     currentConcentration = concentrationField.getDirect(x,y,z);
                     currentCellType=cellTypeArray.getDirect(x,y,z);
+					// jfg
+					currentCellID = cellIDArray.getDirect(x, y, z);// I don't think this is what I want. I should get the cell itself.
+					// jfg end
                     currentDiffCoef=diffCoef[currentCellType];
                     pt=Point3D(x-1,y-1,z-1);
 
@@ -1046,6 +1055,21 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
                                 const Point3D & offset = offsetVecRef[i];	
 								
 								double diffCoef_difference = DiffusionSolverFE_CPU::diffCoefCheck(diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)], currentDiffCoef);
+
+								/*double currMemPer = 1.0;*/
+
+
+								// I need to check if this check is valid, cell types are unsigned char.
+								// I think it's good, because of:
+								// https://stackoverflow.com/questions/75191/what-is-an-unsigned-char
+
+								/*if (currentCellType != 0) 
+								{
+									if (currentCellID != cellIDArray.getDirect(x + offset.x, y + offset.y, z + offset.z))
+									{
+
+									}
+								}*/
 
 
 								//varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z)-currentConcentration);
@@ -1143,7 +1167,10 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
 
 								double diffCoef_difference = DiffusionSolverFE_CPU::diffCoefCheck(diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)], currentDiffCoef);
 
+								//double currMemPer;
 
+
+								//membranePermiability
 								//varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(c_offset-currentConcentration);
 
 								varDiffSumTerm += diffCoef_difference * (c_offset - currentConcentration);

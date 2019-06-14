@@ -69,6 +69,9 @@ namespace CompuCell3D {
 		biasVecX(0.0),
 		biasVecY(0.0),
 		biasVecZ(0.0),
+		// jfg
+		membranePermiability(0.0),
+		//jfg end
 		connectivityOn(false),
         extraAttribPtr(0),
         pyAttrib(0)
@@ -103,6 +106,7 @@ namespace CompuCell3D {
 	  double biasVecX;
 	  double biasVecY;
 	  double biasVecZ;
+	  double membranePermiability;
 	  bool connectivityOn;
       BasicClassGroup *extraAttribPtr;
 

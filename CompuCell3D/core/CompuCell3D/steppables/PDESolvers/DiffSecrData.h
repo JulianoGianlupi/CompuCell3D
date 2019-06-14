@@ -29,7 +29,10 @@ class PDESOLVERS_EXPORT SecretionOnContactData{
 };
 
 class PDESOLVERS_EXPORT UptakeData{
-   public:
+   
+	typedef std::map<int, double> semipermiabilities_t;
+
+	public:
 	    //enum UptakeType{RELATIVE,MM};
 		UptakeData():typeId(0),maxUptake(0.0),relativeUptakeRate(0.0),mmCoef(0.0)
 		{}

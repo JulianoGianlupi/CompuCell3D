@@ -145,6 +145,17 @@ void DiffusionData::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
         for(int i = 0; i< fieldDependencies.size(); i++) {
             cout << "fieldDependencies: " << fieldDependencies[i] << endl;
         }
+
+
+
+		if (_xmlData->findElement("SemiPermiability"))
+		{
+
+		}
+
+
+
+
         cerr<<*this<<endl;
 
 }
@@ -470,3 +481,7 @@ void SecretionData::initialize(Automaton *_automaton){
 
 }
 
+void DiffusionData::setSemipermiabilities(const string typeName1, const string typeName2, const double energy)
+{
+
+}
