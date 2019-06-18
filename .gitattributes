@@ -1,1 +1,7 @@
 cc3d/core/* merge=ours
+
+CompuCell3D/optimization/* merge=ours
+
+cc3d/player5/* merge=ours
+
+CompuCell3D/tests/* merge=ours
