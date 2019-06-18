@@ -5,3 +5,6 @@ CompuCell3D/optimization/* merge=ours
 cc3d/player5/* merge=ours
 
 CompuCell3D/tests/* merge=ours
+
+CompuCell3D/CMakeLists.txt merge=ours
+cc3d/twedit5/* merge=ours
