@@ -91,7 +91,10 @@ void ImplicitMotilityPlugin::extraInit(Simulator *simulator){
 }
 
 
+double ImplicitMotilityPlugin::changeEnergy(const Point3D &pt, const CellG *newCell, const CellG *oldCell) {
 
+	return (this->*changeEnergyFcnPtr)(pt, newCell, oldCell);
+}
 
 double ImplicitMotilityPlugin::changeEnergyByCellType(const Point3D &pt,const CellG *newCell,const CellG *oldCell) {	
 
