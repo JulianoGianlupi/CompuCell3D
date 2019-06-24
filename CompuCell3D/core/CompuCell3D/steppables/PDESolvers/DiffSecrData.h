@@ -186,9 +186,21 @@ class PDESOLVERS_EXPORT DiffusionData : public SteerableObject {
       
 		//steerable interface
 		virtual void update(CC3DXMLElement *_xmlData, bool _fullInitFlag=false);
+		void semipermiabilitySetup(CC3DXMLElement *_xmlData);
 		virtual std::string steerableName();
 
       void initialize(Automaton *_automaton);
+
+
+	  //permiability things
+	  typedef std::map<int, double> permiabilities_t;
+	  typedef std::vector<std::vector<double> > permiabilityArray_t;
+
+	  permiabilities_t permiabilities;
+
+	  permiabilityArray_t permiabilityArray;
+
+	  
 	  //bool getVariableDiffusionCoeeficientFlag();
       bool getVariableDiffusionCoeeficientFlag();
 
@@ -228,6 +240,12 @@ class PDESOLVERS_EXPORT DiffusionData : public SteerableObject {
       std::string FieldDependenciesSTR;
       std::vector<std::string> fieldDependencies;
       std::string funcName;
+
+	  void DiffusionData::setSemipermiabilities(const string typeName1,
+												  const string typeName2,
+												  const double energy);
+
+	  int getIndex(const int type1, const int type2) const;
       
 
 

@@ -150,7 +150,7 @@ void DiffusionData::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
 
 		if (_xmlData->findElement("SemiPermiability"))
 		{
-
+			semipermiabilitySetup(_xmlData);
 		}
 
 
@@ -159,6 +159,9 @@ void DiffusionData::update(CC3DXMLElement *_xmlData, bool _fullInitFlag){
         cerr<<*this<<endl;
 
 }
+
+
+
 
 
 bool DiffusionData::getVariableDiffusionCoeeficientFlag(){return variableDiffusionCoefficientFlag;}
@@ -481,7 +484,77 @@ void SecretionData::initialize(Automaton *_automaton){
 
 }
 
-void DiffusionData::setSemipermiabilities(const string typeName1, const string typeName2, const double energy)
+void DiffusionData::semipermiabilitySetup(CC3DXMLElement *_xmlData)
 {
+	set<unsigned char> cellTypesSet;
 
+	CC3DXMLElementList semipermeableXMLVec = _xmlData->getElements("Permiability");
+
+	for (int i = 0; i < semipermeableXMLVec.size(); ++i)
+	{
+		setSemipermiabilities(semipermeableXMLVec[i]->getAttribute("Type1"),
+			semipermeableXMLVec[i]->getAttribute("Type2"),
+			semipermeableXMLVec[i]->getDouble());
+
+		//inserting all the types to the set (duplicate are automatically eleminated)
+		//to figure out max value of type Id
+
+		cellTypesSet.insert(automaton->getTypeId(semipermeableXMLVec[i]->getAttribute("Type1")));
+		cellTypesSet.insert(automaton->getTypeId(semipermeableXMLVec[i]->getAttribute("Type2")));
+
+	}
+
+	//Now that we know all the types used in the simulation we will find size of 
+	//the permiabilityArray
+	vector<unsigned char> cellTypesVector(cellTypesSet.begin(), cellTypesSet.end());//coping set to the vector
+
+
+	int size = *max_element(cellTypesVector.begin(), cellTypesVector.end());
+	size += 1;//if max element is e.g. 5 then size has to be 6 for an array to be properly allocated
+
+	int index;
+	permiabilityArray.clear();
+	permiabilityArray.assign(size, vector<double>(size, 0.0));
+
+	for (int i = 0; i < size; ++i)
+		for (int j = 0; j < size; ++j)
+		{
+
+			index = getIndex(cellTypesVector[i], cellTypesVector[j]);
+
+			permiabilityArray[i][j] = permiabilities[index];
+
+		}
+
+	cerr << "size=" << size << endl;
+	for (int i = 0; i < size; ++i)
+		for (int j = 0; j < size; ++j)
+		{
+
+			cerr << "permiability[" << i << "][" << j << "]=" << permiabilityArray[i][j] << endl;
+
+		}
+}
+
+
+void DiffusionData::setSemipermiabilities(const string typeName1,
+	const string typeName2,
+	const double perm)
+{
+	char type1 = automaton->getTypeId(typeName1);
+	char type2 = automaton->getTypeId(typeName2);
+
+	int index = getIndex(type1, type2);
+
+	permiabilities_t::iterator it = permiabilities.find(index);
+	ASSERT_OR_THROW(string("Permiability energy for ") + typeName1 + " " + typeName2 +
+		" already set!", it == permiabilities.end());
+
+	permiabilities[index] = perm;
+}
+
+
+int DiffusionData::getIndex(const int type1, const int type2) const {
+	if (type1 < type2) return ((type1 + 1) | ((type2 + 1) << 16));
+	else return ((type2 + 1) | ((type1 + 1) << 16));
 }
