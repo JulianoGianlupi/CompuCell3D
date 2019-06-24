@@ -965,6 +965,11 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
 		short currentCellType=0;
 		// jfg 
 		int currentCellID = 0;
+
+		/*typedef std::vector<std::vector<double> > * permArr = diffData.permiabilityArray;*/
+
+		permArr = diffData.permiabilityArray;
+
 		// jfg end
 		float currentConcentration=0;
 		float updatedConcentration=0.0;
@@ -1053,28 +1058,13 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
 
                             for (register int i = 0  ; i<=maxNeighborIndex ; ++i ){
                                 const Point3D & offset = offsetVecRef[i];	
-								
-								double diffCoef_difference = DiffusionSolverFE_CPU::diffCoefCheck(diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)], currentDiffCoef);
 
-								/*double currMemPer = 1.0;*/
+								double perm = permArr[currentCellType][cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)];
 
-
-								// I need to check if this check is valid, cell types are unsigned char.
-								// I think it's good, because of:
-								// https://stackoverflow.com/questions/75191/what-is-an-unsigned-char
-
-								/*if (currentCellType != 0) 
-								{
-									if (currentCellID != cellIDArray.getDirect(x + offset.x, y + offset.y, z + offset.z))
-									{
-
-									}
-								}*/
+								varDiffSumTerm += perm * diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z)-currentConcentration);
 
 
-								//varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z)-currentConcentration);
 
-								varDiffSumTerm += diffCoef_difference * (concentrationField.getDirect(x + offset.x, y + offset.y, z + offset.z) - currentConcentration);
                             }
 							varDiffSumTerm /=2.0;
 
@@ -1165,15 +1155,10 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
 								}
 
 
-								double diffCoef_difference = DiffusionSolverFE_CPU::diffCoefCheck(diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)], currentDiffCoef);
+								
+								varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(c_offset-currentConcentration);
 
-								//double currMemPer;
-
-
-								//membranePermiability
-								//varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(c_offset-currentConcentration);
-
-								varDiffSumTerm += diffCoef_difference * (c_offset - currentConcentration);
+								
 
 
                             }

@@ -19,6 +19,10 @@ public:
 	// // // void diffuseSingleFieldImpl(ConcentrationField_t &concentrationField, DiffusionData /*const*/ &diffData);
     // // // virtual void boundaryConditionInitImpl(int idx);    
     virtual void handleEventLocal(CC3DEvent & _event);
+
+	typedef std::vector<std::vector<double> > permArr_t;
+	permArr_t permArr;
+
 		
 protected:
 	//virtual void diffuseSingleFieldImpl(ConcentrationField_t &concentrationField, DiffusionData &diffData);

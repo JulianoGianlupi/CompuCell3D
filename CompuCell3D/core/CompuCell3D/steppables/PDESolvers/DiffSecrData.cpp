@@ -514,7 +514,7 @@ void DiffusionData::semipermiabilitySetup(CC3DXMLElement *_xmlData)
 
 	int index;
 	permiabilityArray.clear();
-	permiabilityArray.assign(size, vector<double>(size, 0.0));
+	permiabilityArray.assign(size, vector<double>(size, 1.0));
 
 	for (int i = 0; i < size; ++i)
 		for (int j = 0; j < size; ++j)
