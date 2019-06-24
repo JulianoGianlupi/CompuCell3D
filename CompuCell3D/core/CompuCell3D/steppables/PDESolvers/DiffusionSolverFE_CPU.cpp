@@ -1010,7 +1010,7 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
                     currentConcentration = concentrationField.getDirect(x,y,z);
                     currentCellType=cellTypeArray.getDirect(x,y,z);
 					// jfg
-					currentCellID = cellIDArray.getDirect(x, y, z);// I don't think this is what I want. I should get the cell itself.
+					currentCellID = cellIDArray.getDirect(x, y, z);
 					// jfg end
                     currentDiffCoef=diffCoef[currentCellType];
                     pt=Point3D(x-1,y-1,z-1);
@@ -1025,14 +1025,33 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
                     // if(true){
                         //loop over nearest neighbors
                         const std::vector<Point3D> & offsetVecRef=boundaryStrategy->getOffsetVec(pt);
+
+						//maybe all of this permiability things should be put in another method. Otherwise there are a lot of unnecessary ifs around.
+						//I should ask maciej about that.
+						double leavignTerm = 0.0; // to make sure that mass balance is respected we can't multiply
+						//by number of neighbors, but by the permiability of each of them.
                         for (register int i = 0  ; i<=maxNeighborIndex /*offsetVec.size()*/ ; ++i ){
                             const Point3D & offset = offsetVecRef[i];
-
-                            concentrationSum += concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z);
+							
+							double perm = 1.0;
+							if (currentCellID != cellIDArray.getDirect(x + offset.x, y + offset.y, z + offset.z))
+							{
+								perm = permArr[currentCellType][
+									cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)];
+								leavignTerm += perm;
+							}
+							else
+							{
+								++leavignTerm;
+							}
+							
+							//concentrationSum += concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z);
+                            concentrationSum += perm * concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z);
 
                         }
 
-                        concentrationSum -= (maxNeighborIndex+1)*currentConcentration;
+                        //concentrationSum -= (maxNeighborIndex+1)*currentConcentration;
+						concentrationSum -= leavignTerm * currentConcentration;
                         
                         concentrationSum*=currentDiffCoef;
 
@@ -1059,9 +1078,17 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
                             for (register int i = 0  ; i<=maxNeighborIndex ; ++i ){
                                 const Point3D & offset = offsetVecRef[i];	
 
-								double perm = permArr[currentCellType][cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)];
+								double perm = 1.0;// permArr[currentCellType][cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)];
 
-								varDiffSumTerm += perm * diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z)-currentConcentration);
+								if (currentCellID != cellIDArray.getDirect(x + offset.x, y + offset.y, z + offset.z))
+								{
+									perm = permArr[currentCellType][
+										cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)];
+								}
+
+								//varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)] * (concentrationField.getDirect(x + offset.x, y + offset.y, z + offset.z) - currentConcentration);
+								varDiffSumTerm += perm * diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]
+														*(concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z)-currentConcentration);
 
 
 
@@ -1155,10 +1182,19 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
 								}
 
 
-								
-								varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(c_offset-currentConcentration);
+								double perm = 1.0;// permArr[currentCellType][cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)];
+
+								if (currentCellID != cellIDArray.getDirect(x + offset.x, y + offset.y, z + offset.z))
+								{
+									perm = permArr[currentCellType][
+										cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)];
+								}
 
 								
+								//varDiffSumTerm += diffCoef[cellTypeArray.getDirect(x+offset.x,y+offset.y,z+offset.z)]*(c_offset-currentConcentration);
+
+								varDiffSumTerm += perm * diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)] 
+														* (c_offset - currentConcentration);
 
 
                             }
