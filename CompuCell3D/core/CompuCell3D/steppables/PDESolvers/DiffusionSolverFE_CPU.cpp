@@ -1042,7 +1042,8 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
 							}
 							else
 							{
-								++leavignTerm;
+								//++leavignTerm;
+								leavignTerm += 1.0;
 							}
 							
 							//concentrationSum += concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z);
@@ -1108,33 +1109,81 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
                     
                         //loop over nearest neighbors
                         const std::vector<Point3D> & offsetVecRef=boundaryStrategy->getOffsetVec(pt);
+						double leavignTerm = 0.0; // to make sure that mass balance is respected we can't multiply
+												  //by number of neighbors, but by the permiability of each of them.
                         // cerr<<"VISITING PIXEL="<<pt+Point3D(1,1,1)<<endl;
                         for (register int i = 0  ; i<=maxNeighborIndex /*offsetVec.size()*/ ; ++i ){
                         
                             const Point3D & offset = offsetVecRef[i];
                             signed char nBcIndicator=bcField.getDirect(x+offset.x,y+offset.y,z+offset.z);
                             if (nBcIndicator==BoundaryConditionSpecifier::INTERNAL || nBcIndicator==BoundaryConditionSpecifier::BOUNDARY){ // for pixel neighbors which are internal or boundary pixels  calculations use default "internal pixel" algorithm. boundary pixel means belonging to the lattice but touching boundary
-                                concentrationSum += concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z);
+								//use default here
+								double perm = 1.0;
+								if (currentCellID != cellIDArray.getDirect(x + offset.x, y + offset.y, z + offset.z))
+								{
+									perm = permArr[currentCellType][
+										cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)];
+									leavignTerm += perm;
+								}
+								else
+								{
+									//++leavignTerm;
+									leavignTerm += 1.0;
+								}
+								
+								// concentrationSum += concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z);
+								concentrationSum += perm * concentrationField.getDirect(x + offset.x, y + offset.y, z + offset.z);
+
+								
+
                                  // cerr<<" INTERNAL OR BOUNDARY x,y,z =" <<x+offset.x<<","<<y+offset.y<<","<<z+offset.z<<" c="<<concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z)<<" nBcIndicator="<<(int)nBcIndicator<<endl;
                             }else{
                                 if (bcSpec.planePositions[nBcIndicator]==BoundaryConditionSpecifier::PERIODIC){// for pixel neighbors which are external pixels with periodic BC  calculations use default "internal pixel" algorithm
-                                    concentrationSum += concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z);
+                                    
+									//use default here
+									double perm = 1.0;
+									if (currentCellID != cellIDArray.getDirect(x + offset.x, y + offset.y, z + offset.z))
+									{
+										perm = permArr[currentCellType][
+											cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)];
+										leavignTerm += perm;
+									}
+									else
+									{
+										//++leavignTerm;
+										leavignTerm += 1.0;
+									}
+									
+									//concentrationSum += concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z);
+									concentrationSum += perm * concentrationField.getDirect(x + offset.x, y + offset.y, z + offset.z);
+
+									
+
+
                                 }else if (bcSpec.planePositions[nBcIndicator]==BoundaryConditionSpecifier::CONSTANT_VALUE){
                                     concentrationSum += bcSpec.values[nBcIndicator];
+									// leave as is, leaving term +=1
+									leavignTerm += 1.0;
                                 }else if (bcSpec.planePositions[nBcIndicator]==BoundaryConditionSpecifier::CONSTANT_DERIVATIVE){
                                     if (nBcIndicator==BoundaryConditionSpecifier::MIN_X || nBcIndicator==BoundaryConditionSpecifier::MIN_Y || nBcIndicator==BoundaryConditionSpecifier::MIN_Z){ // for "left hand side" edges of the lattice the sign of the derivative expression is '-'
                                             // cerr<<" x,y,z =" <<x+offset.x<<","<<y+offset.y<<","<<z+offset.z<<" c="<<concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z)<<" bcSpec.values[nBcIndicator]="<<bcSpec.values[nBcIndicator]<<" nBcIndicator="<<(int)nBcIndicator<<endl;
                                             // cerr<<" MIN (x,y,z)="<<x<<","<<y<<","<<z<<" c="<<concentrationField.getDirect(x,y,z)<<" nnBcIndicator="<<(int)nBcIndicator<<" bcSpec.values[nBcIndicator]="<<bcSpec.values[nBcIndicator]<<" concentrationField.getDirect(x,y,z)-bcSpec.values[nBcIndicator]*deltaX="<<concentrationField.getDirect(x,y,z)-bcSpec.values[nBcIndicator]*deltaX<<endl;
                                            concentrationSum += concentrationField.getDirect(x,y,z)-bcSpec.values[nBcIndicator]*deltaX; // notice we use values of the field of the central pixel not of the neiighbor. The neighbor is outside of the lattice and for non cartesian lattice with non periodic BC cannot be trusted to hold appropriate value
-                                    }else{ // for "left hand side" edges of the lattice the sign of  the derivative expression is '+'
+											// leave as is, leaving term +=1
+										   leavignTerm += 1.0;
+									}else{ // for "left hand side" edges of the lattice the sign of  the derivative expression is '+'
                                         // cerr<<" MAX (x,y,z)="<<x<<","<<y<<","<<z<<" c="<<concentrationField.getDirect(x,y,z)<<" nnBcIndicator="<<(int)nBcIndicator<<" bcSpec.values[nBcIndicator]="<<bcSpec.values[nBcIndicator]<<" concentrationField.getDirect(x,y,z)-bcSpec.values[nBcIndicator]*deltaX="<<concentrationField.getDirect(x,y,z)+bcSpec.values[nBcIndicator]*deltaX<<endl;                                            
                                         concentrationSum += concentrationField.getDirect(x,y,z)+bcSpec.values[nBcIndicator]*deltaX ;// notice we use values of the field of the central pixel not of the neiighbor. The neighbor is outside of the lattice and for non cartesian lattice with non periodic BC cannot be trusted to hold appropriate value
+										// leave as is, leaving term +=1
+										leavignTerm += 1.0;
                                     }
                                 }
                             }                                
                         }
 
-                        concentrationSum -= (maxNeighborIndex+1)*currentConcentration;
+                        //concentrationSum -= (maxNeighborIndex+1)*currentConcentration;
+
+						concentrationSum -= leavignTerm*currentConcentration;
                         
                         concentrationSum*=currentDiffCoef;
 
