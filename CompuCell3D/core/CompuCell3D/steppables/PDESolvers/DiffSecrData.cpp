@@ -246,6 +246,22 @@ void DiffusionData::initialize(Automaton *_automaton){
 		diffCoef[typeId]=mitr->second;	
 		variableDiffusionCoefficientFlag=true;		
 	}
+
+
+
+	//initializing semipermiability
+
+	if (!initializedSemiperms)
+	{
+		for (int i = 0 ; i < UCHAR_MAX+1 ; ++i)
+			for (int j = 0; j < UCHAR_MAX + 1; ++j)
+			{
+				permiabilityArray[i][j] = 1.0;
+			}
+		initializedSemiperms = true;
+	}
+
+
 	
 
 
@@ -525,6 +541,7 @@ void DiffusionData::semipermiabilitySetup(CC3DXMLElement *_xmlData)
 			permiabilityArray[i][j] = permiabilities[index];
 
 		}
+	initializedSemiperms = true;
 
 	cerr << "size=" << size << endl;
 	for (int i = 0; i < size; ++i)

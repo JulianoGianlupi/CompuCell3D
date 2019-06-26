@@ -179,6 +179,7 @@ class PDESOLVERS_EXPORT DiffusionData : public SteerableObject {
       float maxConcentration;
       float minConcentration;
       bool useBoxWatcher;
+	  bool initializedSemiperms = false;
 	  int extraTimesPerMCS;	
       std::string diffusionName;
       std::vector<CouplingData> couplingDataVec;
