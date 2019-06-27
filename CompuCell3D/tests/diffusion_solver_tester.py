@@ -46,8 +46,8 @@ if __name__ == '__main__':
 
     d = np.zeros(x_size, dtype=np.float)
     d[:53] = 0.3
-
-    num_step = 40
+    d[:40] = 0.2
+    num_step = 100
     for s in range(num_step):
 
         initial_check = balance_check(c)

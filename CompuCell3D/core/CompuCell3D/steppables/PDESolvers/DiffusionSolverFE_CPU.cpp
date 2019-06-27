@@ -1010,17 +1010,28 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
                     if(bcField.getDirect(x,y,z)==BoundaryConditionSpecifier::INTERNAL){//internal pixel
                     // if(true){
                         //loop over nearest neighbors
+
+						int nonZeroDNeig = 0;
+
                         const std::vector<Point3D> & offsetVecRef=boundaryStrategy->getOffsetVec(pt);
                         for (register int i = 0  ; i<=maxNeighborIndex /*offsetVec.size()*/ ; ++i ){
                             const Point3D & offset = offsetVecRef[i];
+							//if (curr_coef == 0.0 || neigh_coef == 0.0)
 
-                            concentrationSum += concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z);
+							if (currentDiffCoef != 0.0 || diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)] != 0.0)
+							{
+								double actD = 0.5 * (currentDiffCoef + diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)]);
+
+								concentrationSum += actD * (concentrationField.getDirect(x + offset.x, y + offset.y, z + offset.z) - currentConcentration);
+							}
+
+                            //concentrationSum += concentrationField.getDirect(x+offset.x,y+offset.y,z+offset.z);
 
                         }
 
-                        concentrationSum -= (maxNeighborIndex+1)*currentConcentration;
+                        //concentrationSum -= (maxNeighborIndex+1)*currentConcentration;
                         
-                        concentrationSum*=currentDiffCoef;
+                        //concentrationSum*=currentDiffCoef;
 
 						 
 
