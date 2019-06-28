@@ -1011,14 +1011,13 @@ void DiffusionSolverFE_CPU::diffuseSingleField(unsigned int idx){
                     // if(true){
                         //loop over nearest neighbors
 
-						int nonZeroDNeig = 0;
+						//int nonZeroDNeig = 0;
 
                         const std::vector<Point3D> & offsetVecRef=boundaryStrategy->getOffsetVec(pt);
                         for (register int i = 0  ; i<=maxNeighborIndex /*offsetVec.size()*/ ; ++i ){
                             const Point3D & offset = offsetVecRef[i];
-							//if (curr_coef == 0.0 || neigh_coef == 0.0)
 
-							if (currentDiffCoef != 0.0 || diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)] != 0.0)
+							if (currentDiffCoef != 0.0 && diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)] != 0.0)
 							{
 								double actD = 0.5 * (currentDiffCoef + diffCoef[cellTypeArray.getDirect(x + offset.x, y + offset.y, z + offset.z)]);
 
